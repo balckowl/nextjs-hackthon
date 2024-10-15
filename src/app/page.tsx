@@ -2,7 +2,7 @@ import Link from 'next/link'
 
 export default function Home() {
   return (
-    <div className="container mx-auto text-secondary">
+    <div className="container mx-auto">
       <Link href="/box-shadow" className="border">
         Box Shadow Generator
       </Link>
