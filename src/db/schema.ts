@@ -91,7 +91,7 @@ export const boxShadows = pgTable('box-shadows', {
   id: serial('id').primaryKey(),
   user_id: text('user_id')
     .notNull()
-    .references(() => users.id),
+    .references(() => users.id, { onDelete: 'cascade' }),
   created_at: timestamp('created_at').notNull().defaultNow(),
   updatedAt: timestamp('updated_at').$onUpdate(() => new Date()),
   is_shared: boolean('is_shared').notNull().default(false),
@@ -105,8 +105,9 @@ export const boxShadows = pgTable('box-shadows', {
 
 export const waves = pgTable('waves', {
   id: serial('id').primaryKey(),
-  user_id: text('user_id').notNull(),
-  // TODO：ここに外部キーいれる
+  user_id: text('user_id')
+    .notNull()
+    .references(() => users.id, { onDelete: 'cascade' }),
   created_at: timestamp('created_at').notNull().defaultNow(),
   updatedAt: timestamp('updated_at').$onUpdate(() => new Date()),
   is_shared: boolean('is_shared').notNull().default(false),
@@ -115,24 +116,5 @@ export const waves = pgTable('waves', {
   complexity: integer('complexity').notNull(),
   color: text('color').notNull(),
 })
-
-export const userRelations = relations(users, ({ many }) => ({
-  boxShadows: many(boxShadows),
-  waves: many(waves),
-}))
-
-export const boxRelations = relations(boxShadows, ({ one }) => ({
-  author: one(users, {
-    fields: [boxShadows.user_id],
-    references: [users.id],
-  }),
-}))
-
-export const wavesRelations = relations(waves, ({ one }) => ({
-  author: one(users, {
-    fields: [waves.user_id],
-    references: [users.id],
-  }),
-}))
 
 export type SelectBlog = typeof boxShadows.$inferSelect
