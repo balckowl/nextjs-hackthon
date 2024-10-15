@@ -68,7 +68,7 @@ export default function Page() {
         </div>
         <div className="bg-zinc-400">
             <h2>CSS</h2>
-            box-shadow: {boxShadowx}px {boxShadowy}px {boxShadowb}px {boxShadows}px {boxColor};<br />
+            box-shadow: {boxShadow};<br />
             box-radius: {boxRadius}px;<br /><br />
             <h2>Tailwindcss</h2>
             shadow-[{boxShadow}];<br />
