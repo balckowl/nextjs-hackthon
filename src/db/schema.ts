@@ -89,28 +89,28 @@ export const authenticators = pgTable(
 
 export const boxShadows = pgTable('box-shadows', {
   id: serial('id').primaryKey(),
-  user_id: text('user_id')
+  userId: text('user_id')
     .notNull()
     .references(() => users.id, { onDelete: 'cascade' }),
-  created_at: timestamp('created_at').notNull().defaultNow(),
+  createdAt: timestamp('created_at').notNull().defaultNow(),
   updatedAt: timestamp('updated_at').$onUpdate(() => new Date()),
-  is_shared: boolean('is_shared').notNull().default(false),
-  offset_x: integer('offset_x').notNull().default(0),
-  offset_y: integer('offset_y').notNull().default(0),
-  blur_radius: integer('blur_radius').notNull().default(0),
-  spread_radius: integer('spread_radius').notNull().default(0),
+  isShared: boolean('is_shared').notNull().default(false),
+  offsetX: integer('offset_x').notNull().default(0),
+  offsetY: integer('offset_y').notNull().default(0),
+  blurRadius: integer('blur_radius').notNull().default(0),
+  spreadRadius: integer('spread_radius').notNull().default(0),
   color: text('color').notNull(),
-  border_radius: integer('border_radius').notNull().default(0),
+  borderRadius: integer('border_radius').notNull().default(0),
 })
 
 export const waves = pgTable('waves', {
   id: serial('id').primaryKey(),
-  user_id: text('user_id')
+  userId: text('user_id')
     .notNull()
     .references(() => users.id, { onDelete: 'cascade' }),
-  created_at: timestamp('created_at').notNull().defaultNow(),
+  createdAt: timestamp('created_at').notNull().defaultNow(),
   updatedAt: timestamp('updated_at').$onUpdate(() => new Date()),
-  is_shared: boolean('is_shared').notNull().default(false),
+  isShared: boolean('is_shared').notNull().default(false),
   type: text('type').notNull(),
   direction: text('direction').notNull(),
   complexity: integer('complexity').notNull(),
