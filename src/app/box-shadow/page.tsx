@@ -71,7 +71,7 @@ export default function Page() {
             box-shadow: {boxShadowx}px {boxShadowy}px {boxShadowb}px {boxShadows}px {boxColor};<br />
             box-radius: {boxRadius}px;<br /><br />
             <h2>Tailwindcss</h2>
-            shadow-[{boxShadowx}px_{boxShadowy}px_{boxShadowb}px_{boxShadows}px_{boxColor}];<br />
+            shadow-[{boxShadow}];<br />
             rounded-[{boxRadius}px];
         </div>
        
