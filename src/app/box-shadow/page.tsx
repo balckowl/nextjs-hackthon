@@ -66,6 +66,14 @@ export default function Page() {
             step={1}
             />
         </div>
+        <div className="bg-zinc-400">
+            <h2>CSS</h2>
+            box-shadow: {boxShadow};<br />
+            box-radius: {boxRadius}px;<br /><br />
+            <h2>Tailwindcss</h2>
+            shadow-[{boxShadow}];<br />
+            rounded-[{boxRadius}px];
+        </div>
        
     </div>
   );
