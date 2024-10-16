@@ -4,7 +4,7 @@ import type { ReactNode } from 'react'
 import { tv, type VariantProps } from 'tailwind-variants'
 
 const buttonStyles = tv({
-  base: 'rounded-full disabled:cursor-not-allowed font-semibold text-[20px]',
+  base: 'rounded-full disabled:cursor-not-allowed font-semibold text-[15px]',
   variants: {
     variant: {
       solid: '',
