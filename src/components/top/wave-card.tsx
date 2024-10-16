@@ -2,7 +2,7 @@ import GeneratorCard from './generator-card'
 
 export default function WaveCard() {
   return (
-    <GeneratorCard name='Wave'>
+    <GeneratorCard name='Wave' link='svg-waves'>
       <svg
         xmlns="http://www.w3.org/2000/svg"
         viewBox="0 0 1440 590"

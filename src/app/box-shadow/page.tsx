@@ -19,16 +19,16 @@ export default function Page() {
     const boxShadow = `${boxShadowx}px ${boxShadowy}px ${boxShadowb}px ${boxShadows}px ${boxShadowColor}`;
 
   return (
-    <div className="w-[80%] mx-auto min-h-[calc(100vh-80px)]">
+    <div className="w-[75%] mx-auto min-h-[calc(100vh-80px)]">
         <AlertPopup value={isCopySuccess} setValue={setisCopySuccess} />
         <div className="grid grid-cols-2 gap-5 pt-[35px] mb-[35px]">
-            <div className="flex justify-center items-center h-[350px] rounded-2xl border-[3px] overflow-hidden relative">
+            <div className="flex justify-center items-center h-[320px] rounded-2xl border-[3px] overflow-hidden relative">
                 <div className="w-[170px] h-[170px] rounded-[32px]" 
                     style={{ boxShadow, backgroundColor:boxColor }}
                 >
                 </div>
             </div>
-        <div className="h-[350px] rounded-2xl border-[3px] relative">
+        <div className="h-[320px] rounded-2xl border-[3px] relative">
           <button type="button" className="focus:outline-none absolute top-5 right-5 border-[2px] p-3 rounded-md" onClick={()=> copyToClipboard(boxShadow, setisCopySuccess)}>
             <RiClipboardLine color="#ededed" />
           </button>
