@@ -35,10 +35,11 @@ export default function Page() {
   `
 
   return (
-    <div className="w-[80%] mx-auto min-h-[calc(100vh-80px)]">
+    <div className="w-[75%] mx-auto min-h-[calc(100vh-80px)]">
       <AlertPopup value={isCopySuccess} setValue={setIsCopySuccess}/>
+
       <div className="grid grid-cols-2 gap-5 pt-[35px] mb-[35px]">
-        <div className="h-[350px] rounded-2xl border-[3px] overflow-hidden relative">
+        <div className="h-[320px] rounded-2xl border-[3px] overflow-hidden relative">
           <svg
             viewBox="0 0 1440 590"
             xmlns="http://www.w3.org/2000/svg"
@@ -56,12 +57,13 @@ export default function Page() {
             />
           </svg>
         </div>
-        <div className="h-[350px] rounded-2xl border-[3px] relative">
+        <div className="h-[320px] rounded-2xl border-[3px] relative">
           <button type="button" className="focus:outline-none absolute top-5 right-5 border-[2px] p-3 rounded-md" onClick={() =>copyToClipboard(svgCode, setIsCopySuccess)}>
             <RiClipboardLine color="#ededed" />
           </button>
         </div>
       </div>
+
       <div className="mb-[20px]">
         <h2 className="font-bold text-[20px]">プロパティ</h2>
       </div>
