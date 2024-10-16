@@ -1,14 +1,16 @@
-import Link from 'next/link'
+import BoxShadowCard from '@/components/top/box-shadow-card'
+import WaveCard from '@/components/top/wave-card'
 
 export default function Home() {
   return (
-    <div className="container mx-auto">
-      <Link href="/box-shadow" className="border">
-        Box Shadow Generator
-      </Link>
-      <Link href="/svg-waves" className="border">
-        SVG Waves Generator
-      </Link>
+    <div className="w-[65%] mx-auto min-h-[calc(100vh-80px)]">
+      <h2 className="font-semibold text-[30px] text-center pt-[50px] pb-[60px]">
+        あたらしいコードを作りましょう
+      </h2>
+      <div className="grid grid-cols-2 gap-5">
+        <BoxShadowCard />
+        <WaveCard />
+      </div>
     </div>
   )
 }
