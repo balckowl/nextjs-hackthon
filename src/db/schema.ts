@@ -1,14 +1,5 @@
-import { relations } from 'drizzle-orm'
-// ユーザーテーブル（Auth.js）
 import { boolean, integer, pgTable, primaryKey, serial, text, timestamp } from 'drizzle-orm/pg-core'
-import { drizzle } from 'drizzle-orm/postgres-js'
 import type { AdapterAccountType } from 'next-auth/adapters'
-import postgres from 'postgres'
-
-const connectionString = 'postgres://postgres:postgres@localhost:5432/drizzle'
-const pool = postgres(connectionString, { max: 1 })
-
-export const db = drizzle(pool)
 
 export const users = pgTable('user', {
   id: text('id')
@@ -100,7 +91,7 @@ export const boxShadows = pgTable('box-shadows', {
   blurRadius: integer('blur_radius').notNull().default(0),
   spreadRadius: integer('spread_radius').notNull().default(0),
   color: text('color').notNull(),
-  borderRadius: integer('border_radius').notNull().default(0),
+  shadowColor: text('shadow_color').notNull(),
 })
 
 export const waves = pgTable('waves', {
@@ -113,7 +104,7 @@ export const waves = pgTable('waves', {
   isShared: boolean('is_shared').notNull().default(false),
   type: text('type').notNull(),
   direction: text('direction').notNull(),
-  complexity: integer('complexity').notNull(),
+  opacity: integer('opacity').notNull(),
   color: text('color').notNull(),
 })
 
