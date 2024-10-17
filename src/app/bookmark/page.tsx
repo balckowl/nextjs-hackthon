@@ -16,52 +16,6 @@ export default function Page() {
                 </div>
             </div>
             <div className="flex gap-5"><Bookmarkcard/><Bookmarkcard/><Bookmarkcard/></div>
-           
-
-               {/* <div className="grid grid-cols-6 grid-rows-6 gap-10">
-                <div className="col-span-2 row-span-3 border-[3px] h-[250px] rounded-[30px]">
-                    <div className="h-full w-full"></div> 
-                    <div className="flex justify-between">
-                        <h2 className="text-xl">タイトル</h2>
-                        <button>公開</button>
-                    </div>
-                </div>
-                <div className="col-span-2 row-span-3 col-start-3 border-[3px] h-[250px] rounded-[30px]">
-                <div className="h-full w-full"></div> 
-                    <div className="flex justify-between">
-                        <h2 className="text-xl">タイトル</h2>
-                        <button>公開</button>
-                    </div>
-                </div>
-                <div className="col-span-2 row-span-3 col-start-5 border-[3px] h-[250px] rounded-[30px]">
-                <div className="h-full w-full"></div> 
-                    <div className="flex justify-between">
-                        <h2 className="text-xl">タイトル</h2>
-                        <button>公開</button>
-                    </div>
-                </div>
-                <div className="col-span-2 row-span-3 row-start-4 border-[3px] h-[250px] rounded-[30px]">
-                <div className="h-full w-full"></div> 
-                    <div className="flex justify-between">
-                        <h2 className="text-xl">タイトル</h2>
-                        <button>公開</button>
-                    </div>
-                </div>
-                <div className="col-span-2 row-span-3 col-start-3 row-start-4 border-[3px] h-[250px] rounded-[30px]">
-                <div className="h-full w-full"></div> 
-                    <div className="flex justify-between">
-                        <h2 className="text-xl">タイトル</h2>
-                        <button>公開</button>
-                    </div>
-                </div>
-                <div className="col-span-2 row-span-3 col-start-5 row-start-4 border-[3px] h-[250px] rounded-[30px]">
-                <div className="h-full w-full"></div> 
-                    <div className="flex justify-between">
-                        <h2 className="text-xl">タイトル</h2>
-                        <button>公開</button>
-                    </div>
-                </div> 
-            </div> */} 
     </div>
   )
 }
