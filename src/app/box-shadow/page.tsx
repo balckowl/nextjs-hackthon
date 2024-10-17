@@ -1,11 +1,10 @@
 'use client'
 import AlertPopup from '@/components/alert-popup/alert-popup'
 import ColorPicker from '@/components/color-picker.tsx/color-picker'
+import BookmarkDialog from '@/components/generator/bookmark-dialog'
 import InputSlider from '@/components/input-slider/input-slider'
 import { copyToClipboard } from '@/lib/copy-to-clipboard'
-import Image from 'next/image'
 import { useState } from 'react'
-import { FaStackExchange, FaSwift } from 'react-icons/fa'
 import { HiArrowPath } from 'react-icons/hi2'
 import { RiClipboardLine } from 'react-icons/ri'
 import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter'
@@ -76,8 +75,9 @@ export default function Page() {
           </SyntaxHighlighter>
         </div>
       </div>
-      <div className="mb-[20px]">
+      <div className="mb-[20px] flex gap-3 items-center">
         <h2 className="font-bold text-[20px]">プロパティ</h2>
+        <BookmarkDialog />
       </div>
       <div className="grid grid-cols-4 gap-x-10 gap-y-6">
         <div>
