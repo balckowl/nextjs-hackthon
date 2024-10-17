@@ -3,11 +3,11 @@
 import { type Dispatch, type SetStateAction, useRef } from 'react'
 
 type Props = {
-  color: string
+  color?: string
   setColor: Dispatch<SetStateAction<string>>
 }
 
-export default function ColorPicker({ color, setColor }: Props) {
+export default function ColorPicker({ color = '#ff5555', setColor }: Props) {
   const colorInputRef = useRef<HTMLInputElement>(null)
 
   const handleClick = () => {

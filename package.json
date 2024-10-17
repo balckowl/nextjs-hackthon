@@ -11,7 +11,8 @@
     "check": "biome check ./src/**/*.{ts,tsx}",
     "lint:fix": "biome lint --write ./src/**/*.{ts,tsx}",
     "format:fix": "biome format --write ./src/**/*.{ts,tsx}",
-    "check:fix": "biome check --write ./src/**/*.{ts,tsx}"
+    "check:fix": "biome check --write ./src/**/*.{ts,tsx}",
+    "storybook": "storybook dev -p 6006"
   },
   "dependencies": {
     "@auth/drizzle-adapter": "^1.7.0",
