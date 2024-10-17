@@ -19,21 +19,13 @@ export default function Page() {
   const [isCopySuccess, setIsCopySuccess] = useState<boolean>(false)
   const directionList = ['top', 'bottom']
 
-  const svgCode = `
-    <svg 
-      viewBox="0 0 1440 590" 
-      xmlns="http://www.w3.org/2000/svg" 
-      class="transform="${direction === 'top' ? 'scale(1, -1)' : ''}">
-      <path 
-        d="${getWavePath(waveType)}" 
-        stroke="none" 
-        stroke-width="0" 
-        fill="${color}" 
-        fill-opacity="${opacity / 100}" 
-        class="transition-all duration-300 ease-in-out delay-150 path-0"
-      />
-    </svg>
-  `
+  const svgCode = `<svg 
+  viewBox="0 0 1440 590" 
+  xmlns="http://www.w3.org/2000/svg" 
+  class="transform="${direction === 'top' ? 'scale(1, -1)' : ''}">
+  <title>波</title>
+  <path d="${getWavePath(waveType)}" stroke="none" stroke-width="0" fill="${color}" fill-opacity="${opacity / 100}" class="transition-all duration-300 ease-in-out delay-150 path-0" />
+</svg>`
 
   return (
     <div className="w-[75%] mx-auto min-h-[calc(100vh-80px)]">
@@ -75,7 +67,8 @@ export default function Page() {
               padding: '0px',
               display: 'flex',
               alignItems: 'center',
-              fontSize: '13px',
+              paddingInline: "60px",
+              fontSize: '16px',
             }}
             language="html"
             style={oneLight}
