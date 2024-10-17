@@ -1,8 +1,6 @@
 import type { Metadata } from 'next'
 import localFont from 'next/font/local'
 import './globals.css'
-import Header from '@/components/header/header'
-import MenuPopover from '@/components/menu-popover/menu-popover'
 import { Theme } from '@radix-ui/themes'
 //raduix/uiのcss
 // import '@radix-ui/themes/styles.css'
@@ -31,10 +29,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
-        <Theme>
-          <Header />
-          {children}
-        </Theme>
+        <Theme>{children}</Theme>
       </body>
     </html>
   )
