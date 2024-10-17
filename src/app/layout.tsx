@@ -1,8 +1,8 @@
 import type { Metadata } from 'next'
 import localFont from 'next/font/local'
 import './globals.css'
-import Footer from '@/components/footer'
 import Header from '@/components/header/header'
+import MenuPopover from '@/components/menu-popover/menu-popover'
 import { Theme } from '@radix-ui/themes'
 //raduix/uiのcss
 // import '@radix-ui/themes/styles.css'
