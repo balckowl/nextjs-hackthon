@@ -1,4 +1,3 @@
-'use client'
 import Bookmarkcard from "@/components/bookmark-card/bookmark-card"
 import Button from "@/components/button/button"
 
@@ -15,7 +14,7 @@ export default function Page() {
                     <p className="text-[#909090]">更新順</p>
                 </div>
             </div>
-            <div className="flex gap-5"><Bookmarkcard/><Bookmarkcard/><Bookmarkcard/></div>
+            <div className="flex gap-5"><Bookmarkcard/></div>
     </div>
   )
 }

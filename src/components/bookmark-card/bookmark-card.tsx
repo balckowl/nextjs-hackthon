@@ -1,4 +1,5 @@
-import React, { useState } from 'react'
+'use client'
+import { useState } from 'react'
 
 export default function Bookmarkcard() {
     const [isPublic, setIsPublic] = useState<boolean>(false)
