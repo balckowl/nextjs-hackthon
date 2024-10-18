@@ -1,4 +1,4 @@
-import { NextRequest, NextResponse } from "next/server"
+import { type NextRequest, NextResponse } from "next/server"
 import { db } from "@/db"
 import { waves } from "@/db/schema"
 import { auth } from "@/auth"
