@@ -1,61 +1,99 @@
 'use client'
 import AlertPopup from '@/components/alert-popup/alert-popup'
-import ColorPicker from '@/components/color-picker.tsx/color-picker'
+import Badge from '@/components/badge/badge'
 import BookmarkDialog from '@/components/generator/bookmark-dialog'
-import InputSlider from '@/components/input-slider/input-slider'
+import Preview from '@/components/generator/box-shadow/preview'
+import CodeblockInnerBtn from '@/components/generator/codeblock-inner-btn'
+import { ColorControl } from '@/components/generator/color-control'
+import PropertyArea from '@/components/generator/property-area'
+import { SliderControl } from '@/components/generator/slide-control'
 import { copyToClipboard } from '@/lib/copy-to-clipboard'
 import { useState } from 'react'
 import { HiArrowPath } from 'react-icons/hi2'
+import { LuBookmark } from 'react-icons/lu'
 import { RiClipboardLine } from 'react-icons/ri'
 import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter'
 import { oneLight } from 'react-syntax-highlighter/dist/esm/styles/prism'
 
 export default function Page() {
-  const [boxColor, setboxColor] = useState<string>('#ff5555')
-  const [boxShadowx, setboxShadowx] = useState<number>(0)
-  const [boxShadowy, setboxShadowy] = useState<number>(0)
-  const [boxShadowb, setboxShadowb] = useState<number>(15)
-  const [boxShadows, setboxShadows] = useState<number>(-5)
-  const [boxShadowColor, setboxShadowColor] = useState<string>('#777777')
+  const [color, setColor] = useState<string>('#ff5555')
+  const [offsetX, setOffsetX] = useState<number>(0)
+  const [offsetY, setOffsetY] = useState<number>(0)
+  const [blurRadius, setblurRadius] = useState<number>(15)
+  const [spreadRadius, setSpreadRadius] = useState<number>(-5)
+  const [shadowColor, setShadowColor] = useState<string>('#777777')
   const [isCopySuccess, setIsCopySuccess] = useState<boolean>(false)
-  const [isVanillaCss, setIsVanillaCss] = useState<boolean>(false)
+  const [isVanillaCss, setIsVanillaCss] = useState<boolean>(true)
+  const [isShared, setIsShared] = useState<boolean>(true)
+  const [isSubmittingSuccess, setIsSubmittingSuccess] = useState<boolean>(false)
 
-  const boxShadow = `${boxShadowx}px ${boxShadowy}px ${boxShadowb}px ${boxShadows}px ${boxShadowColor}`
+  const boxShadow = `${offsetX}px ${offsetY}px ${blurRadius}px ${spreadRadius}px ${shadowColor}`
 
   const boxShadowCode = `.box {
   box-shadow: ${boxShadow};
 }`
 
-  const twBoxshadowCode = `shadow-[${boxShadowx}px_${boxShadowy}px_${boxShadowb}px_${boxShadows}px_${boxShadowColor}]`
+  const twBoxshadowCode = `shadow-[${offsetX}px_${offsetY}px_${blurRadius}px_${spreadRadius}px_${shadowColor}]`
+
+  const handleSubmitBoxShadow = async () => {
+    await fetch('http://localhost:3000/api/box-shadow', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        isShared,
+        offsetX,
+        offsetY,
+        blurRadius,
+        spreadRadius,
+        color,
+        shadowColor,
+      }),
+    })
+
+    setIsSubmittingSuccess(true)
+  }
 
   return (
     <div className="w-[75%] mx-auto min-h-[calc(100vh-80px)]">
-      <AlertPopup value={isCopySuccess} setValue={setIsCopySuccess} />
+      <AlertPopup value={isCopySuccess} setValue={setIsCopySuccess} text="コピーできました" />
+      <AlertPopup
+        value={isSubmittingSuccess}
+        setValue={setIsSubmittingSuccess}
+        text="登録しました"
+      />
       <div className="grid grid-cols-2 gap-5 pt-[35px] mb-[35px]">
-        <div className="flex justify-center items-center h-[320px] rounded-2xl border-[3px] overflow-hidden relative">
-          <div
-            className="w-[170px] h-[170px] rounded-[32px]"
-            style={{ boxShadow, backgroundColor: boxColor }}
-          />
-        </div>
+        <Preview boxShadow={boxShadow} color={color} />
         <div className="h-[320px] rounded-2xl border-[3px] relative">
-          <button
-            type="button"
-            className="focus:outline-none absolute top-5 right-5 border-[2px] p-3 rounded-md bg-white"
-            onClick={() => copyToClipboard(isVanillaCss ? boxShadowCode : twBoxshadowCode, setIsCopySuccess)}
-          >
-            <RiClipboardLine color="#ededed" />
-          </button>
-          <button
-            type="button"
-            className="focus:outline-none absolute bottom-5 right-5 border-[2px] p-3 rounded-md bg-white"
-            onClick={() => setIsVanillaCss(!isVanillaCss)}
-          >
-            <HiArrowPath color='#ededed'/>
-          </button>
-          <div className="absolute top-5 left-5 bg-secondary text-primary text-[13px] px-4 py-1 rounded-full font-bold">
-            {isVanillaCss ? "CSS": "Tailwind CSS"}
+          <div className="absolute top-5 right-5 flex gap-2">
+            <CodeblockInnerBtn
+              onClick={() =>
+                copyToClipboard(isVanillaCss ? boxShadowCode : twBoxshadowCode, setIsCopySuccess)
+              }
+            >
+              <RiClipboardLine color="#909090" />
+            </CodeblockInnerBtn>
+            <BookmarkDialog
+              handleSubmitBoxShadow={handleSubmitBoxShadow}
+              isShared={isShared}
+              setIsShared={setIsShared}
+            >
+              <CodeblockInnerBtn>
+                <LuBookmark color="#909090" />
+              </CodeblockInnerBtn>
+            </BookmarkDialog>
           </div>
+
+          <CodeblockInnerBtn
+            onClick={() => setIsVanillaCss(!isVanillaCss)}
+            className="absolute bottom-5 right-5"
+          >
+            <HiArrowPath color="#909090" />
+          </CodeblockInnerBtn>
+
+          <Badge>{isVanillaCss ? 'Vanila CSS' : 'Tailwind CSS'}</Badge>
+
           <SyntaxHighlighter
             customStyle={{
               borderRadius: '16px',
@@ -71,40 +109,46 @@ export default function Page() {
             language="css"
             style={oneLight}
           >
-            {isVanillaCss ? boxShadowCode: twBoxshadowCode}
+            {isVanillaCss ? boxShadowCode : twBoxshadowCode}
           </SyntaxHighlighter>
         </div>
       </div>
-      <div className="mb-[20px] flex gap-3 items-center">
-        <h2 className="font-bold text-[20px]">プロパティ</h2>
-        <BookmarkDialog />
-      </div>
-      <div className="grid grid-cols-4 gap-x-10 gap-y-6">
-        <div>
-          <p className="mb-[7px] text-[14px]">カラー</p>
-          <ColorPicker color={boxColor} setColor={setboxColor} />
-        </div>
-        <div>
-          <p className="mb-[7px] text-[14px]">シャドウカラー</p>
-          <ColorPicker color={boxShadowColor} setColor={setboxShadowColor} />
-        </div>
-        <div>
-          <p className="mb-[7px] text-[14px]">X軸オフセット</p>
-          <InputSlider value={boxShadowx} setValue={setboxShadowx} min={-50} max={50} unit="px" />
-        </div>
-        <div>
-          <p className="mb-[7px] text-[14px]">Y軸オフセット</p>
-          <InputSlider value={boxShadowy} setValue={setboxShadowy} min={-50} max={50} unit="px" />
-        </div>
-        <div>
-          <p className="mb-[7px] text-[14px]">ぼかし</p>
-          <InputSlider value={boxShadowb} setValue={setboxShadowb} min={0} max={100} unit="px" />
-        </div>
-        <div>
-          <p className="mb-[7px] text-[14px]">広がり</p>
-          <InputSlider value={boxShadows} setValue={setboxShadows} min={-50} max={50} unit="px" />
-        </div>
-      </div>
+      <PropertyArea>
+        <ColorControl label="カラー" color={color} setColor={setColor} />
+        <ColorControl label="シャドウカラー" color={shadowColor} setColor={setShadowColor} />
+        <SliderControl
+          label="X軸オフセット"
+          value={offsetX}
+          setValue={setOffsetX}
+          min={-50}
+          max={50}
+          unit="px"
+        />
+        <SliderControl
+          label="Y軸オフセット"
+          value={offsetY}
+          setValue={setOffsetY}
+          min={-50}
+          max={50}
+          unit="px"
+        />
+        <SliderControl
+          label="ぼかし"
+          value={blurRadius}
+          setValue={setblurRadius}
+          min={0}
+          max={100}
+          unit="px"
+        />
+        <SliderControl
+          label="広がり"
+          value={spreadRadius}
+          setValue={setSpreadRadius}
+          min={-50}
+          max={50}
+          unit="px"
+        />
+      </PropertyArea>
     </div>
   )
 }

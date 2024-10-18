@@ -1,17 +1,15 @@
-import React, { useState } from 'react'
+import type {  ReactNode,  Dispatch,  SetStateAction } from 'react'
 import * as Dialog from '@radix-ui/react-dialog'
 import { RxCross2 } from 'react-icons/rx'
-import { FaBookmark } from 'react-icons/fa'
 
-export default function ProfileDialog() {
-  const [isPublic, setIsPublic] = useState<boolean>(true)
+export default function ProfileDialog({
+  handleSubmitBoxShadow, isShared, setIsShared,children
+}: { handleSubmitBoxShadow: () => void, isShared: boolean, setIsShared: Dispatch<SetStateAction<boolean>>, children: ReactNode }) {
 
   return (
     <Dialog.Root>
       <Dialog.Trigger asChild>
-        <button type="button" className='flex items-center gap-1 text-[12px] text-primary py-1 px-3 rounded-full hover:bg-secondary font-bold'>
-          <FaBookmark />ブックマーク
-        </button>
+        {children}
       </Dialog.Trigger>
       <Dialog.Portal>
         <Dialog.Overlay className="bg-black/50 data-[state=open]:animate-overlayShow fixed inset-0" />
@@ -24,8 +22,8 @@ export default function ProfileDialog() {
             <div className="flex justify-center">
               <button
                 type="button"
-                onClick={() => setIsPublic(true)}
-                className={`${isPublic ? 'bg-primary  text-white' : 'bg-[#ededed] text-[#909090]'} flex-1 font-bold text-[13px] py-[6px] rounded-md`}
+                onClick={() => setIsShared(true)}
+                className={`${isShared ? 'bg-primary  text-white' : 'bg-[#ededed] text-[#909090]'} flex-1 font-bold text-[13px] py-[6px] rounded-md`}
               >
                 公開
               </button>
@@ -33,8 +31,8 @@ export default function ProfileDialog() {
             <div className="flex justify-center">
               <button
                 type="button"
-                onClick={() => setIsPublic(false)}
-                className={`${!isPublic ? 'bg-primary  text-white' : 'bg-[#ededed] text-[#909090]'} flex-1 font-bold text-[13px] py-[6px] rounded-md`}
+                onClick={() => setIsShared(false)}
+                className={`${!isShared ? 'bg-primary  text-white' : 'bg-[#ededed] text-[#909090]'} flex-1 font-bold text-[13px] py-[6px] rounded-md`}
               >
                 非公開
               </button>
@@ -63,11 +61,11 @@ export default function ProfileDialog() {
           </div>
 
           <div className="flex  gap-3">
-            <Dialog.Close asChild className='flex-1'>
-              <button type='button'>登録する</button>
+            <Dialog.Close asChild className="flex-1">
+              <button type="button" onClick={handleSubmitBoxShadow} className='border py-2 rounded-md hover:bg-[#eee] duration-75'>登録する</button>
             </Dialog.Close>
-            <Dialog.Close asChild className='flex-1'>
-              <button type="button">戻る</button>
+            <Dialog.Close asChild className="flex-1">
+              <button type="button" className='border py-2 rounded-md hover:bg-[#eee] duration-75'>戻る</button>
             </Dialog.Close>
           </div>
 
