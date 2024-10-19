@@ -31,10 +31,6 @@ const DELETE = async (req: NextRequest) =>{
         throw Error("認証してください")
     }
 
-    const { user } = session
-
-    const userId = user?.id
-
     await db.delete(boxShadows).where(eq(boxShadows.id, id));
 
     return NextResponse.json({status: 204})
