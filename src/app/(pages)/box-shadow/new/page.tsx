@@ -26,6 +26,7 @@ export default function Page() {
   const [isVanillaCss, setIsVanillaCss] = useState<boolean>(true)
   const [isShared, setIsShared] = useState<boolean>(true)
   const [isSubmittingSuccess, setIsSubmittingSuccess] = useState<boolean>(false)
+  const [title, setTitle] = useState<string>("タイトル未設定")
 
   const boxShadow = `${offsetX}px ${offsetY}px ${blurRadius}px ${spreadRadius}px ${shadowColor}`
 
@@ -49,6 +50,7 @@ export default function Page() {
         spreadRadius,
         color,
         shadowColor,
+        title,
       }),
     })
 
@@ -78,6 +80,8 @@ export default function Page() {
               handleSubmitBoxShadow={handleSubmitBoxShadow}
               isShared={isShared}
               setIsShared={setIsShared}
+              title={title}
+              setTitle={setTitle}
             >
               <CodeblockInnerBtn>
                 <LuBookmark color="#909090" />

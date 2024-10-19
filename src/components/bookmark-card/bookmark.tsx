@@ -1,7 +1,8 @@
 'use client'
-import Bookmarkcard from '@/components/bookmark-card/bookmark-card'
+import Boxshadowcard from '@/components/bookmark-card/boxshadow-card'
 import type { SelectBoxShadow, SelectWave } from '@/db/schema'
 import { useState } from 'react'
+import WaveCard from './wave-card'
 
 type Props = {
   allWaves: SelectWave[]
@@ -13,36 +14,33 @@ export default function BookMark({ allWaves, allBoxShadows }: Props) {
 
   return (
     <div className="w-[75%] mx-auto min-h-[calc(100vh-80px)] pb-[150px]">
-      <h2 className="font-bold text-[30px] text-center pt-[50px] pb-[60px]">
-        ブックマークしたアイテム
+      <h2 className="font-semibold text-[30px] text-center pt-[50px] pb-[60px]">
+        ブックマークをしたアイテム
       </h2>
       <div>
-        <div className="flex justify-between mb-3">
-          <div className="flex gap-3">
-            <button
-              type="button"
-              className="px-8 py-1 rounded-md bg-[#eaeaea]"
-              onClick={() => setIsToggleNum(0)}
-            >
-              shadow
-            </button>
-            <button
-              type="button"
-              className="px-8 py-1 rounded-md bg-[#eaeaea]"
-              onClick={() => setIsToggleNum(1)}
-            >
-              wave
-            </button>
-          </div>
-          <p className="text-[#909090]">更新順</p>
+        <div className="flex items-center gap-2 mb-3">
+          <button
+            type="button"
+            className={`${toggleNum === 0 ? "bg-primary text-white" : "text-[#909090] bg-[#eaeaea]"} w-[110px] py-1 rounded-md font-bold`}
+            onClick={() => setIsToggleNum(0)}
+          >
+            Shadow
+          </button>
+          <button
+            type="button"
+            className={`${toggleNum === 1 ? "bg-primary text-white" : "text-[#909090] bg-[#eaeaea]"} w-[110px] py-1 rounded-md font-bold`}
+            onClick={() => setIsToggleNum(1)}
+          >
+            Wave
+          </button>
         </div>
       </div>
       <div className="grid grid-cols-3 gap-5">
         {toggleNum === 0 &&
           allBoxShadows.map((boxShadow) => (
-            <Bookmarkcard key={boxShadow.id} boxshadow={boxShadow} />
+            <Boxshadowcard key={boxShadow.id} boxshadow={boxShadow} />
           ))}
-        {toggleNum === 1 && allWaves.map((wave) => <Bookmarkcard key={wave.id} wave={wave} />)}
+        {toggleNum === 1 && allWaves.map((wave) => <WaveCard key={wave.id} wave={wave} />)}
       </div>
     </div>
   )

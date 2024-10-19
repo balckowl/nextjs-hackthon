@@ -10,7 +10,7 @@ type Props = {
 export default function GeneratorCard({ name, link,  children }: Props) {
   return (
     <Link
-      href={`/${link}`}
+      href={`/${link}/new`}
       className="text-[55px] text-primary font-semibold border-[3px] h-[300px] flex justify-center items-center rounded-[30px] relative overflow-hidden"
     >
       {name}

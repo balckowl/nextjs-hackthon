@@ -1,10 +1,16 @@
-import type {  ReactNode,  Dispatch,  SetStateAction } from 'react'
+import type { ReactNode, Dispatch, SetStateAction } from 'react'
 import * as Dialog from '@radix-ui/react-dialog'
 import { RxCross2 } from 'react-icons/rx'
 
-export default function ProfileDialog({
-  handleSubmitBoxShadow, isShared, setIsShared,children
-}: { handleSubmitBoxShadow: () => void, isShared: boolean, setIsShared: Dispatch<SetStateAction<boolean>>, children: ReactNode }) {
+type Props = {
+  handleSubmitBoxShadow: () => void,
+  isShared: boolean,
+  setIsShared: Dispatch<SetStateAction<boolean>>,
+  children: ReactNode,
+  title: string
+  setTitle: Dispatch<SetStateAction<string>>
+}
+export default function ProfileDialog({ handleSubmitBoxShadow, isShared, setIsShared, children, title, setTitle }: Props) {
 
   return (
     <Dialog.Root>
@@ -44,7 +50,8 @@ export default function ProfileDialog({
               <span className="text-sm font-semibold text-gray-700 mb-1 block">タイトル</span>
               <input
                 className="flex h-10 w-full rounded-md border border-input bg-transparent px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
-                defaultValue="タイトル未設定"
+                value={title}
+                onChange={(e) => setTitle(e.target.value)}
                 placeholder="タイトル未設定"
               />
             </label>
