@@ -14,7 +14,8 @@ export const getAllBoxshadows = async () => {
 export const getAllBoxshadowsByUserId = async (userId: string) => {
 
     const allBoxshadowsByUserId = await db.query.boxShadows.findMany({
-        where: eq(boxShadows.userId, userId)
+        where: eq(boxShadows.userId, userId),
+        orderBy: [desc(boxShadows.id)]
       })
 
     return allBoxshadowsByUserId
