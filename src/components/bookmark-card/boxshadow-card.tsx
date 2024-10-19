@@ -39,7 +39,7 @@ export default function Boxshadowcard({ boxshadow: hello }: Props) {
     return (
         <Link href={`/box-shadow/${id}`} className="col-span-1">
             <AlertPopup value={isCopySuccess} setValue={setIsCopySuccess} text="コピーできました" />
-            <div className="border-[2px] h-[220px] rounded-xl relative flex items-center justify-center mb-[10px]">
+            <div className="border-[2px] h-[220px] rounded-xl relative flex items-center justify-center mb-[10px] overflow-hidden">
                 <div
                     className="w-[100px] h-[100px] rounded-xl"
                     style={{
