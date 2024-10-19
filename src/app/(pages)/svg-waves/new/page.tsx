@@ -82,7 +82,7 @@ export default function Page() {
         </div>
         <div className="h-[320px] rounded-2xl border-[3px] relative">
           <div className="absolute top-5 right-5 flex gap-2">
-            <CodeblockInnerBtn onClick={() => copyToClipboard(svgCode, setIsCopySuccess)}>
+            <CodeblockInnerBtn onClick={(e) => copyToClipboard(e, svgCode, setIsCopySuccess)}>
               <RiClipboardLine color="#909090" />
             </CodeblockInnerBtn>
             <BookmarkDialog

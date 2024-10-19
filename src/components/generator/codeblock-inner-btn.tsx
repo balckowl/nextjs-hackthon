@@ -1,9 +1,9 @@
 import { cn } from '@/lib/utils'
-import type { ReactNode } from 'react'
+import type { ReactNode, MouseEvent } from 'react'
 
 type Props = {
   children: ReactNode
-  onClick?: () => void
+  onClick?: (e: MouseEvent<HTMLButtonElement>) => void
   className?: string
 }
 

@@ -1,6 +1,9 @@
-import type { Dispatch, SetStateAction } from 'react'
+import type { Dispatch, MouseEvent, SetStateAction } from 'react'
 
-export const copyToClipboard = (code: string, setValue: Dispatch<SetStateAction<boolean>>) => {
+export const copyToClipboard = (e: MouseEvent, code: string, setValue: Dispatch<SetStateAction<boolean>>) => {
+  e.preventDefault()
+  e.stopPropagation()
+
   navigator.clipboard
     .writeText(code)
     .then(() => {
