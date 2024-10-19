@@ -6,12 +6,14 @@ import { MouseEvent, useState } from 'react'
 import { HiOutlineTrash } from 'react-icons/hi2'
 import { RiClipboardLine } from 'react-icons/ri'
 import AlertPopup from '../alert-popup/alert-popup'
+import { useRouter } from 'next/navigation'
 
 type Props = {
     boxshadow: SelectBoxShadow
 }
 
 export default function Boxshadowcard({ boxshadow: hello }: Props) {
+    const router = useRouter()
     const [isCopySuccess, setIsCopySuccess] = useState<boolean>(false)
     const { offsetX, offsetY, blurRadius, spreadRadius, shadowColor, createdAt, id, color, isShared, title } = hello
     const formattedCreatedAt = format(createdAt, "yyyy/MM/dd")
@@ -34,6 +36,8 @@ export default function Boxshadowcard({ boxshadow: hello }: Props) {
                 id
             })
         })
+
+        router.refresh()
     }
 
     return (

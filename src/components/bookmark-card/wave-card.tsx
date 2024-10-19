@@ -6,12 +6,15 @@ import { useState } from 'react'
 import { HiOutlineTrash } from 'react-icons/hi2'
 import { RiClipboardLine } from 'react-icons/ri'
 import AlertPopup from '../alert-popup/alert-popup'
+import { useRouter } from 'next/navigation'
 
 type Props = {
     wave: SelectWave
 }
 
 export default function WaveCard({ wave: hello }: Props) {
+
+    const router = useRouter()
 
     const { type, direction, color, opacity, id, title, isShared } = hello
     const [isCopySuccess, setIsCopySuccess] = useState<boolean>(false)
@@ -39,6 +42,8 @@ export default function WaveCard({ wave: hello }: Props) {
                 id
             })
         })
+        
+        router.refresh()
     }
 
     return (

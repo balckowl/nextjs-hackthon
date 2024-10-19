@@ -13,8 +13,12 @@ import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter'
 import { oneLight } from 'react-syntax-highlighter/dist/cjs/styles/prism'
 import BookmarkDialog from '@/components/generator/bookmark-dialog'
 import { LuBookmark } from 'react-icons/lu'
+import { useRouter } from 'next/navigation'
 
 export default function Page() {
+
+  const router = useRouter()
+
   const [color, setColor] = useState<string>('#ff5555')
   const [opacity, setOpacity] = useState<number>(100)
   const [type, setType] = useState<string>('sine')
@@ -51,6 +55,7 @@ export default function Page() {
     })
 
     setIsSubmittingSuccess(true)
+    router.refresh()
   }
 
   return (
