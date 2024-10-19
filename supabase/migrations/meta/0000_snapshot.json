@@ -1,5 +1,5 @@
 {
-  "id": "02fb1403-b471-495f-add0-b772e1f31709",
+  "id": "b364cfc1-0476-4869-8eb5-e155c6e36e69",
   "prevId": "00000000-0000-0000-0000-000000000000",
   "version": "7",
   "dialect": "postgresql",
@@ -218,6 +218,13 @@
           "type": "timestamp",
           "primaryKey": false,
           "notNull": false
+        },
+        "title": {
+          "name": "title",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "'タイトル未設定'"
         },
         "is_shared": {
           "name": "is_shared",
@@ -440,6 +447,13 @@
           "type": "timestamp",
           "primaryKey": false,
           "notNull": false
+        },
+        "title": {
+          "name": "title",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "'タイトル未設定'"
         },
         "is_shared": {
           "name": "is_shared",
