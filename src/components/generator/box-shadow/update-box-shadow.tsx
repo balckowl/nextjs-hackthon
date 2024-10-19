@@ -23,12 +23,14 @@ type Props = {
 export default function UpdateBoxShadow({ boxshadow }: Props) {
 
     const {
+        id,
         color: oldColor,
         offsetX: oldOffsetX,
         offsetY: oldOffsetY,
         blurRadius: oldBlurRadius,
         spreadRadius: oldSpreadRadis,
-        shadowColor: oldShadowColor
+        shadowColor: oldShadowColor,
+        title: oldTitle
     } = boxshadow
 
     const [color, setColor] = useState<string>(oldColor)
@@ -41,7 +43,7 @@ export default function UpdateBoxShadow({ boxshadow }: Props) {
     const [isVanillaCss, setIsVanillaCss] = useState<boolean>(true)
     const [isShared, setIsShared] = useState<boolean>(true)
     const [isSubmittingSuccess, setIsSubmittingSuccess] = useState<boolean>(false)
-    const [title, setTitle] = useState<string>("タイトル未設定")
+    const [title, setTitle] = useState<string>(oldTitle)
 
     const boxShadow = `${offsetX}px ${offsetY}px ${blurRadius}px ${spreadRadius}px ${shadowColor}`
 
@@ -53,11 +55,12 @@ export default function UpdateBoxShadow({ boxshadow }: Props) {
 
     const handleSubmitBoxShadow = async () => {
         await fetch('http://localhost:3000/api/box-shadow', {
-            method: 'POST',
+            method: 'PUT',
             headers: {
                 'Content-Type': 'application/json',
             },
             body: JSON.stringify({
+                id,
                 isShared,
                 offsetX,
                 offsetY,
