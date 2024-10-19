@@ -4,7 +4,8 @@ import { eq, desc } from "drizzle-orm"
 
 export const getAllWaves = async () => {
     const allWaves = await db.query.waves.findMany({
-        orderBy: [desc(waves.id)]
+        orderBy: [desc(waves.id)],
+        where: eq(waves.isShared, true)
     })
 
     return allWaves

@@ -5,7 +5,8 @@ import { eq, desc } from "drizzle-orm"
 
 export const getAllBoxshadows = async () => {
     const allBoxshadows = await db.query.boxShadows.findMany({
-        orderBy: [desc(boxShadows.id)]
+        orderBy: [desc(boxShadows.id)],
+        where: eq(boxShadows.isShared, true)
     })
 
     return allBoxshadows
