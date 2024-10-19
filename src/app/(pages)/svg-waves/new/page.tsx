@@ -24,6 +24,7 @@ export default function Page() {
   const [isShared, setIsShared] = useState<boolean>(true)
   const directionList = ['top', 'bottom']
   const [isSubmittingSuccess, setIsSubmittingSuccess] = useState<boolean>(false)
+  const [title, setTitle] = useState<string>("タイトル未設定")
 
   const svgCode = `<svg 
   viewBox="0 0 1440 590" 
@@ -45,6 +46,7 @@ export default function Page() {
         direction,
         opacity,
         color,
+        title
       }),
     })
 
@@ -87,6 +89,8 @@ export default function Page() {
               handleSubmitBoxShadow={handleSubmitWave}
               isShared={isShared}
               setIsShared={setIsShared}
+              title={title}
+              setTitle={setTitle}
             >
               <CodeblockInnerBtn>
                 <LuBookmark color="#909090" />
