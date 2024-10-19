@@ -16,3 +16,13 @@ export const getAllWavesByUserId = async (userId: string) => {
 
     return allWavesByUserId
 }
+
+export const getWave = async(id: number) => {
+    
+    const wave = await db.query.waves.findFirst({
+        where: eq(waves.id, id)
+    })
+
+    return wave
+
+}

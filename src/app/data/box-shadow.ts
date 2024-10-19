@@ -17,3 +17,13 @@ export const getAllBoxshadowsByUserId = async (userId: string) => {
 
     return allBoxshadowsByUserId
 }
+
+export const getBoxshadow = async(id: number) => {
+    
+    const boxShadow = await db.query.boxShadows.findFirst({
+        where: eq(boxShadows.id, id)
+    })
+
+    return boxShadow
+
+}
