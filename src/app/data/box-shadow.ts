@@ -1,10 +1,12 @@
 import {db} from "@/db"
 import { boxShadows } from "@/db/schema"
-import { eq } from "drizzle-orm"
+import { eq, desc } from "drizzle-orm"
 
 
 export const getAllBoxshadows = async () => {
-    const allBoxshadows = await db.query.boxShadows.findMany()
+    const allBoxshadows = await db.query.boxShadows.findMany({
+        orderBy: [desc(boxShadows.id)]
+    })
 
     return allBoxshadows
 }

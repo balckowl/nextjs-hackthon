@@ -1,9 +1,11 @@
 import {db} from "@/db"
 import { waves } from "@/db/schema"
-import { eq } from "drizzle-orm"
+import { eq, desc } from "drizzle-orm"
 
 export const getAllWaves = async () => {
-    const allWaves = await db.query.waves.findMany()
+    const allWaves = await db.query.waves.findMany({
+        orderBy: [desc(waves.id)]
+    })
 
     return allWaves
 }
