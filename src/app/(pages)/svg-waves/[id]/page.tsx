@@ -3,13 +3,13 @@ import UpdateSvgWaves from "@/components/generator/svg-waves/update-svg-waves"
 
 export default async function Page({ params }: { params: { id: string } }) {
     const { id } = params
-    const svgwaves = await getWave(Number(id))
+    const svgwave = await getWave(Number(id))
 
-    if (!svgwaves) {
+    if (!svgwave) {
         return <div>SVG Waves data not found.</div>
     }
 
     return (
-        <UpdateSvgWaves svgwaves={svgwaves}/>
+        <UpdateSvgWaves svgwave={svgwave}/>
     )
 }

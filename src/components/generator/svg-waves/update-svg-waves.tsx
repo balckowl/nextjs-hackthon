@@ -16,15 +16,23 @@ import { LuBookmark } from 'react-icons/lu'
 import { SelectWave } from '@/db/schema'
 
 type Props = {
-    svgwaves: SelectWave
+    svgwave: SelectWave
 }
 
-export default function UpdateSvgWaves({ svgwaves }: Props) {
-  const [color, setColor] = useState<string>('#ff5555')
-  const [opacity, setOpacity] = useState<number>(100)
-  const [type, setType] = useState<string>('sine')
+export default function UpdateSvgWaves({ svgwave }: Props) {
+
+  const {
+    color: oldColor,
+    opacity: oldOpacity,
+    type: oldType,
+    direction: oldDirection
+  } = svgwave
+
+  const [color, setColor] = useState<string>(oldColor)
+  const [opacity, setOpacity] = useState<number>(oldOpacity)
+  const [type, setType] = useState<string>(oldType)
   const waveList = ['smooth', 'sine', 'square']
-  const [direction, setDirection] = useState<string>('bottom')
+  const [direction, setDirection] = useState<string>(oldDirection)
   const [isCopySuccess, setIsCopySuccess] = useState<boolean>(false)
   const [isShared, setIsShared] = useState<boolean>(true)
   const directionList = ['top', 'bottom']
