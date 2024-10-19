@@ -15,7 +15,7 @@ export const getAllWavesByUserId = async (userId: string) => {
 
     const allWavesByUserId = await db.query.waves.findMany({
         where: eq(waves.userId, userId),
-        orderBy: [desc(waves.id)]
+        orderBy: [desc(waves.updatedAt)]
     })
 
     return allWavesByUserId
