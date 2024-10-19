@@ -22,10 +22,12 @@ type Props = {
 export default function UpdateSvgWaves({ svgwave }: Props) {
 
   const {
+    id,
     color: oldColor,
     opacity: oldOpacity,
     type: oldType,
-    direction: oldDirection
+    direction: oldDirection,
+    title: oldTitle,
   } = svgwave
 
   const [color, setColor] = useState<string>(oldColor)
@@ -37,7 +39,7 @@ export default function UpdateSvgWaves({ svgwave }: Props) {
   const [isShared, setIsShared] = useState<boolean>(true)
   const directionList = ['top', 'bottom']
   const [isSubmittingSuccess, setIsSubmittingSuccess] = useState<boolean>(false)
-  const [title, setTitle] = useState<string>("タイトル未設定")
+  const [title, setTitle] = useState<string>(oldTitle)
 
   const svgCode = `<svg 
   viewBox="0 0 1440 590" 
@@ -49,11 +51,12 @@ export default function UpdateSvgWaves({ svgwave }: Props) {
 
   const handleSubmitWave = async () => {
     await fetch('http://localhost:3000/api/wave', {
-      method: 'POST',
+      method: 'PUT',
       headers: {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
+        id,
         isShared,
         type,
         direction,
