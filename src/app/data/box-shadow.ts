@@ -1,12 +1,13 @@
 import {db} from "@/db"
-import { boxShadows } from "@/db/schema"
+import { boxShadows} from "@/db/schema"
 import { eq, desc } from "drizzle-orm"
 
 
 export const getAllSharedBoxshadows = async () => {
     const allSharedBoxshadows = await db.query.boxShadows.findMany({
         orderBy: [desc(boxShadows.updatedAt)],
-        where: eq(boxShadows.isShared, true)
+        where: eq(boxShadows.isShared, true), 
+        with: { user: true }
     })
 
     return allSharedBoxshadows
