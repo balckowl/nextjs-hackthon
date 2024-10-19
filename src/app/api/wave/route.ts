@@ -4,7 +4,7 @@ import { waves } from "@/db/schema"
 import { auth } from "@/auth"
 
 const POST = async (req: NextRequest) =>{
-    const {isShared, type, direction, opacity, color} = await req.json()
+    const {title, isShared, type, direction, opacity, color} = await req.json()
     
     const session = await auth()
 
@@ -16,7 +16,7 @@ const POST = async (req: NextRequest) =>{
 
     const userId = user?.id
 
-    await db.insert(waves).values({ userId: userId as string, isShared, type, direction, opacity, color})
+    await db.insert(waves).values({ userId: userId as string, title, isShared, type, direction, opacity, color})
 
     return NextResponse.json({status: 201})
 }
