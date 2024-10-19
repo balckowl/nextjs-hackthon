@@ -8,6 +8,7 @@ import { ColorControl } from '@/components/generator/color-control'
 import PropertyArea from '@/components/generator/property-area'
 import { SliderControl } from '@/components/generator/slide-control'
 import { copyToClipboard } from '@/lib/copy-to-clipboard'
+import { useRouter } from 'next/navigation'
 import { useState } from 'react'
 import { HiArrowPath } from 'react-icons/hi2'
 import { LuBookmark } from 'react-icons/lu'
@@ -16,6 +17,7 @@ import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter'
 import { oneLight } from 'react-syntax-highlighter/dist/esm/styles/prism'
 
 export default function Page() {
+  const router = useRouter()
   const [color, setColor] = useState<string>('#ff5555')
   const [offsetX, setOffsetX] = useState<number>(0)
   const [offsetY, setOffsetY] = useState<number>(0)
@@ -55,6 +57,7 @@ export default function Page() {
     })
 
     setIsSubmittingSuccess(true)
+    router.refresh()
   }
 
   return (

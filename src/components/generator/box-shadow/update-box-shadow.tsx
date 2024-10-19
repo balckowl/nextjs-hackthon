@@ -9,6 +9,7 @@ import PropertyArea from '@/components/generator/property-area'
 import { SliderControl } from '@/components/generator/slide-control'
 import { SelectBoxShadow } from '@/db/schema'
 import { copyToClipboard } from '@/lib/copy-to-clipboard'
+import { useRouter } from 'next/navigation'
 import { useState } from 'react'
 import { HiArrowPath } from 'react-icons/hi2'
 import { LuBookmark } from 'react-icons/lu'
@@ -32,6 +33,8 @@ export default function UpdateBoxShadow({ boxshadow }: Props) {
         shadowColor: oldShadowColor,
         title: oldTitle
     } = boxshadow
+
+    const router = useRouter()
 
     const [color, setColor] = useState<string>(oldColor)
     const [offsetX, setOffsetX] = useState<number>(oldOffsetX)
@@ -73,6 +76,7 @@ export default function UpdateBoxShadow({ boxshadow }: Props) {
         })
 
         setIsSubmittingSuccess(true)
+        router.refresh()
     }
 
     return (

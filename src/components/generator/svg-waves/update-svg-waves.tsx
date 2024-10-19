@@ -14,6 +14,7 @@ import { oneLight } from 'react-syntax-highlighter/dist/cjs/styles/prism'
 import BookmarkDialog from '@/components/generator/bookmark-dialog'
 import { LuBookmark } from 'react-icons/lu'
 import { SelectWave } from '@/db/schema'
+import { useRouter } from 'next/navigation'
 
 type Props = {
     svgwave: SelectWave
@@ -30,6 +31,7 @@ export default function UpdateSvgWaves({ svgwave }: Props) {
     title: oldTitle,
   } = svgwave
 
+  const router = useRouter()
   const [color, setColor] = useState<string>(oldColor)
   const [opacity, setOpacity] = useState<number>(oldOpacity)
   const [type, setType] = useState<string>(oldType)
@@ -67,6 +69,7 @@ export default function UpdateSvgWaves({ svgwave }: Props) {
     })
 
     setIsSubmittingSuccess(true)
+    router.refresh()
   }
 
   return (
