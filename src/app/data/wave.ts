@@ -8,11 +8,11 @@ export const getAllWaves = async () => {
     return allWaves
 }
 
-export const getAllWavesByUserid = async (userId: string) => {
+export const getAllWavesByUserId = async (userId: string) => {
 
-    const allUserWaves = await db.query.waves.findMany({
+    const allWavesByUserId = await db.query.waves.findMany({
         where: eq(waves.userId, userId)
     })
 
-    return allUserWaves
+    return allWavesByUserId
 }
