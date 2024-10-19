@@ -1,17 +1,21 @@
 import {db} from "@/db"
 import { waves } from "@/db/schema"
-import { eq } from "drizzle-orm"
+import { eq, desc } from "drizzle-orm"
 
-export const getAllWaves = async () => {
-    const allWaves = await db.query.waves.findMany()
+export const getAllSharedWaves = async () => {
+    const allSharedWaves = await db.query.waves.findMany({
+        orderBy: [desc(waves.updatedAt)],
+        where: eq(waves.isShared, true)
+    })
 
-    return allWaves
+    return allSharedWaves
 }
 
 export const getAllWavesByUserId = async (userId: string) => {
 
     const allWavesByUserId = await db.query.waves.findMany({
-        where: eq(waves.userId, userId)
+        where: eq(waves.userId, userId),
+        orderBy: [desc(waves.id)]
     })
 
     return allWavesByUserId
