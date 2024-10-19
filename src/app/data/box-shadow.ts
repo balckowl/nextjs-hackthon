@@ -3,7 +3,7 @@ import { boxShadows, users} from "@/db/schema"
 import { eq, desc } from "drizzle-orm"
 
 
-export const getAllSharedBoxshadows = async () => {
+export const getAllSharedBoxshadowsWithUser = async () => {
     const allSharedBoxshadows = await db.select()
     .from(boxShadows)
     .leftJoin(users, eq(users.id, boxShadows.userId))

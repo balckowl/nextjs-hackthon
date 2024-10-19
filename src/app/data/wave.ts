@@ -2,10 +2,10 @@ import {db} from "@/db"
 import { waves, users } from "@/db/schema"
 import { eq, desc } from "drizzle-orm"
 
-export const getAllSharedWaves = async () => {
+export const getAllSharedWavesWithUser = async () => {
     const allSharedWaves = await db.select()
     .from(waves)
-    .leftJoin(users, eq(users.id, waves.userId))  // usersとwavesをuserIdで結合
+    .leftJoin(users, eq(users.id, waves.userId))  
     .where(eq(waves.isShared, true))
     .orderBy(desc(waves.updatedAt));
 
