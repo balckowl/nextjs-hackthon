@@ -3,6 +3,7 @@ import { db } from "@/db"
 import { waves } from "@/db/schema"
 import { auth } from "@/auth"
 import {eq} from "drizzle-orm"
+import { revalidatePath } from 'next/cache'
 
 const POST = async (req: NextRequest) =>{
     const {title, isShared, type, direction, opacity, color} = await req.json()
@@ -18,6 +19,7 @@ const POST = async (req: NextRequest) =>{
     const userId = user?.id
 
     await db.insert(waves).values({ userId: userId as string, title, isShared, type, direction, opacity, color})
+    revalidatePath('/bookmark');
 
     return NextResponse.json({status: 201})
 }
@@ -32,6 +34,7 @@ const DELETE = async (req: NextRequest) =>{
     }
 
     await db.delete(waves).where(eq(waves.id, id));
+    revalidatePath('/bookmark');
 
     return NextResponse.json({status: 204})
 }
