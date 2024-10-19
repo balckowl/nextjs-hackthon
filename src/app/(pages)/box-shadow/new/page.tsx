@@ -70,8 +70,8 @@ export default function Page() {
         <div className="h-[320px] rounded-2xl border-[3px] relative">
           <div className="absolute top-5 right-5 flex gap-2">
             <CodeblockInnerBtn
-              onClick={() =>
-                copyToClipboard(isVanillaCss ? boxShadowCode : twBoxshadowCode, setIsCopySuccess)
+              onClick={(e) =>
+                copyToClipboard(e, isVanillaCss ? boxShadowCode : twBoxshadowCode, setIsCopySuccess)
               }
             >
               <RiClipboardLine color="#909090" />
