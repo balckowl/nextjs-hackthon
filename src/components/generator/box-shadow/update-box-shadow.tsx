@@ -7,24 +7,26 @@ import CodeblockInnerBtn from '@/components/generator/codeblock-inner-btn'
 import { ColorControl } from '@/components/generator/color-control'
 import PropertyArea from '@/components/generator/property-area'
 import { SliderControl } from '@/components/generator/slide-control'
-import { SelectBoxShadow } from '@/db/schema'
+import { SelectBoxShadow, SelectUser } from '@/db/schema'
 import { copyToClipboard } from '@/lib/copy-to-clipboard'
 import { useRouter } from 'next/navigation'
 import { useState } from 'react'
 import { HiArrowPath } from 'react-icons/hi2'
-import { LuBookmark } from 'react-icons/lu'
+import { PiPencilCircleFill } from 'react-icons/pi'
 import { RiClipboardLine } from 'react-icons/ri'
 import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter'
 import { oneLight } from 'react-syntax-highlighter/dist/esm/styles/prism'
 
 type Props = {
-    boxshadow: SelectBoxShadow
+    boxshadowWithUser: { boxShadow: SelectBoxShadow, user: SelectUser | null },
+    userId: string | null,
 }
 
-export default function UpdateBoxShadow({ boxshadow }: Props) {
+export default function UpdateBoxShadow({ boxshadowWithUser, userId: nowLoggedUserId }: Props) {
 
     const {
         id,
+        userId,
         color: oldColor,
         offsetX: oldOffsetX,
         offsetY: oldOffsetY,
@@ -32,7 +34,11 @@ export default function UpdateBoxShadow({ boxshadow }: Props) {
         spreadRadius: oldSpreadRadis,
         shadowColor: oldShadowColor,
         title: oldTitle
-    } = boxshadow
+    } = boxshadowWithUser["boxShadow"]
+
+    const {
+        image, name
+    } = boxshadowWithUser["user"]!
 
     const router = useRouter()
 
@@ -88,7 +94,7 @@ export default function UpdateBoxShadow({ boxshadow }: Props) {
                 text="登録しました"
             />
             <div className="grid grid-cols-2 gap-5 pt-[35px] mb-[35px]">
-                <Preview boxShadow={boxShadow} color={color} />
+                <Preview boxShadow={boxShadow} color={color} name={name as string} image={image as string}/>
                 <div className="h-[320px] rounded-2xl border-[3px] relative">
                     <div className="absolute top-5 right-5 flex gap-2">
                         <CodeblockInnerBtn
@@ -98,17 +104,19 @@ export default function UpdateBoxShadow({ boxshadow }: Props) {
                         >
                             <RiClipboardLine color="#909090" />
                         </CodeblockInnerBtn>
-                        <BookmarkDialog
+                        {userId === nowLoggedUserId && <BookmarkDialog
                             handleSubmitBoxShadow={handleSubmitBoxShadow}
                             isShared={isShared}
                             setIsShared={setIsShared}
                             title={title}
                             setTitle={setTitle}
+                            mainText="スタイル情報を更新"
+                            saveBtnText='更新する'
                         >
                             <CodeblockInnerBtn>
-                                <LuBookmark color="#909090" />
+                                <PiPencilCircleFill color="#909090" />
                             </CodeblockInnerBtn>
-                        </BookmarkDialog>
+                        </BookmarkDialog>}
                     </div>
 
                     <CodeblockInnerBtn
