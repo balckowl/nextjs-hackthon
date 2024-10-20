@@ -20,7 +20,7 @@ export default async function Header() {
             <Link href="/box-shadow/new" className='flex items-center gap-1 border p-3 rounded-xl bg-white'>
               <RiShadowFill />
             </Link>
-            <Link href="/svg-waves/new" className='flex items-center gap-1 border p-3 rounded-xl bg-whtie'>
+            <Link href="/svg-waves/new" className='flex items-center gap-1 border p-3 rounded-xl bg-white'>
               <MdWaves />
             </Link>
             <Link href="/community" className='flex items-center gap-1 border p-3 rounded-xl bg-white'>

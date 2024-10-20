@@ -67,7 +67,7 @@ export default function Page() {
         text="登録しました"
       />
       <div className="grid grid-cols-2 gap-5 pt-[35px] mb-[35px]">
-        <div className="h-[320px] rounded-2xl border-[3px] overflow-hidden relative">
+        <div className="bg-white h-[320px] rounded-2xl border-[3px] overflow-hidden relative">
           <svg
             viewBox="0 0 1440 590"
             xmlns="http://www.w3.org/2000/svg"

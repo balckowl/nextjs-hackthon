@@ -54,7 +54,7 @@ export default function WaveCard({ waveWithUser, userId: nowLoggedUser }: Props)
     return (
         <Link href={`/svg-waves/${id}`} className="col-span-1">
             <AlertPopup value={isCopySuccess} setValue={setIsCopySuccess} text="コピーできました" />
-            <div className="border-[2px] h-[220px] rounded-xl relative mb-[10px]">
+            <div className="bg-white border-[2px] h-[220px] rounded-xl relative mb-[10px]">
                 <svg
                     viewBox="0 0 1440 590"
                     xmlns="http://www.w3.org/2000/svg"
