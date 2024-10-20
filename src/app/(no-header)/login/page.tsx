@@ -6,8 +6,8 @@ export default function page() {
     <div className="flex h-screen">
       <div className="w-[25%] border-r-2">
         <div className="h-full flex justify-center items-center">
-          <div className="mb-9">
-            <img src="/logo/logo.svg" alt="" className="text-4xl font-bold mb-[24px] flex justify-start"/>
+          <div className="mb-9 ml-4">
+            <img src="/logo/logo.svg" alt="" className="text-4xl font-bold mb-[24px] flex justify-start w-9/12"/>
             <div className="text-2xl my-12">
               <Button variant="outline" className="font-bold rounded-lg flex"><FaGithub className="size-6 my-auto mr-2" />Github を利用してログイン</Button>
             </div>
