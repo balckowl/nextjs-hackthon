@@ -5,7 +5,7 @@ import { eq, desc } from "drizzle-orm"
 export const getAllSharedWaves = async () => {
     const allSharedWaves = await db.select()
     .from(waves)
-    .leftJoin(users, eq(users.id, waves.userId))  // usersとwavesをuserIdで結合
+    .leftJoin(users, eq(users.id, waves.userId))
     .where(eq(waves.isShared, true))
     .orderBy(desc(waves.updatedAt));
 
@@ -22,12 +22,17 @@ export const getAllWavesByUserId = async (userId: string) => {
     return allWavesByUserId
 }
 
-export const getWave = async(id: number) => {
-    
-    const wave = await db.query.waves.findFirst({
-        where: eq(waves.id, id)
-    })
+export const getWaveWithUser = async (id: number) => {
+    const waveWithUser = await db
+        .select({
+            wave: waves,
+            user: users,
+        })
+        .from(waves)
+        .leftJoin(users, eq(users.id, waves.userId))
+        .where(eq(waves.id, id))
+        .limit(1)
 
-    return wave
+    return waveWithUser.length > 0 ? waveWithUser[0] : null
+};
 
-}

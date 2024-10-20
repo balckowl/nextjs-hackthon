@@ -23,12 +23,17 @@ export const getAllBoxshadowsByUserId = async (userId: string) => {
     return allBoxshadowsByUserId
 }
 
-export const getBoxshadow = async(id: number) => {
-    
-    const boxShadow = await db.query.boxShadows.findFirst({
-        where: eq(boxShadows.id, id)
-    })
+export const getBoxshadowWithUser = async (id: number) => {
+    const boxshadowWithUser = await db
+        .select({
+            boxShadow: boxShadows,
+            user: users,
+        })
+        .from(boxShadows)
+        .leftJoin(users, eq(users.id, boxShadows.userId))
+        .where(eq(boxShadows.id, id))
+        .limit(1)
 
-    return boxShadow
-
+    return boxshadowWithUser.length > 0 ? boxshadowWithUser[0] : null
 }
+

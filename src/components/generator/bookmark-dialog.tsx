@@ -9,8 +9,10 @@ type Props = {
   children: ReactNode,
   title: string
   setTitle: Dispatch<SetStateAction<string>>
+  mainText?: string
+  saveBtnText?: string
 }
-export default function ProfileDialog({ handleSubmitBoxShadow, isShared, setIsShared, children, title, setTitle }: Props) {
+export default function ProfileDialog({ mainText = "ブックマークに登録", saveBtnText = "登録する", handleSubmitBoxShadow, isShared, setIsShared, children, title, setTitle }: Props) {
 
   return (
     <Dialog.Root>
@@ -21,7 +23,7 @@ export default function ProfileDialog({ handleSubmitBoxShadow, isShared, setIsSh
         <Dialog.Overlay className="bg-black/50 data-[state=open]:animate-overlayShow fixed inset-0" />
         <Dialog.Content className="data-[state=open]:animate-contentShow fixed top-[50%] left-[50%] max-h-[85vh] w-[90vw] max-w-[450px] translate-x-[-50%] translate-y-[-50%] rounded-[6px] bg-white p-[25px] shadow-[hsl(206_22%_7%_/_35%)_0px_10px_38px_-10px,_hsl(206_22%_7%_/_20%)_0px_10px_20px_-15px] focus:outline-none">
           <Dialog.Title className="text-lg font-semibold text-gray-900 mb-2">
-            ブックマークに登録
+            {mainText}
           </Dialog.Title>
 
           <div className="grid grid-cols-2 mb-[15px] bg-[#ededed] rounded-md">
@@ -69,7 +71,7 @@ export default function ProfileDialog({ handleSubmitBoxShadow, isShared, setIsSh
 
           <div className="flex  gap-3">
             <Dialog.Close asChild className="flex-1">
-              <button type="button" onClick={handleSubmitBoxShadow} className='border py-2 rounded-md hover:bg-[#eee] duration-75'>登録する</button>
+              <button type="button" onClick={handleSubmitBoxShadow} className='border py-2 rounded-md hover:bg-[#eee] duration-75'>{saveBtnText}</button>
             </Dialog.Close>
             <Dialog.Close asChild className="flex-1">
               <button type="button" className='border py-2 rounded-md hover:bg-[#eee] duration-75'>戻る</button>

@@ -1,7 +1,7 @@
-import { getAllBoxshadows, getAllBoxshadowsByUserId } from "@/app/data/box-shadow"
-import { getAllWaves, getAllWavesByUserId } from "@/app/data/wave"
+import { getAllBoxshadowsByUserId } from "@/app/data/box-shadow"
+import { getAllWavesByUserId } from "@/app/data/wave"
 import { auth } from "@/auth"
-import BookMark from "@/components/bookmark-card/bookmark"
+import BookMark from "@/components/bookmark/bookmark"
 
 export default async function Page() {
 

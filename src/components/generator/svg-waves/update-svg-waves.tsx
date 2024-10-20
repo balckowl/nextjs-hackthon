@@ -12,15 +12,17 @@ import { RiClipboardLine } from 'react-icons/ri'
 import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter'
 import { oneLight } from 'react-syntax-highlighter/dist/cjs/styles/prism'
 import BookmarkDialog from '@/components/generator/bookmark-dialog'
-import { LuBookmark } from 'react-icons/lu'
-import { SelectWave } from '@/db/schema'
+import { SelectUser, SelectWave } from '@/db/schema'
 import { useRouter } from 'next/navigation'
+import { PiPencilCircleFill } from 'react-icons/pi'
+import Image from 'next/image'
 
 type Props = {
-    svgwave: SelectWave
+  svgwaveWithUser: { wave: SelectWave, user: SelectUser | null },
+  userId: string | null
 }
 
-export default function UpdateSvgWaves({ svgwave }: Props) {
+export default function UpdateSvgWaves({ svgwaveWithUser, userId: nowLoggedUser }: Props) {
 
   const {
     id,
@@ -29,7 +31,10 @@ export default function UpdateSvgWaves({ svgwave }: Props) {
     type: oldType,
     direction: oldDirection,
     title: oldTitle,
-  } = svgwave
+    userId
+  } = svgwaveWithUser["wave"]
+
+  const { name, image } = svgwaveWithUser["user"]!
 
   const router = useRouter()
   const [color, setColor] = useState<string>(oldColor)
@@ -98,23 +103,29 @@ export default function UpdateSvgWaves({ svgwave }: Props) {
               className="transition-all duration-300 ease-in-out delay-150 path-0"
             />
           </svg>
+          {name && image && <div className='flex items-center gap-3 absolute top-4 left-4'>
+            <Image src={image as string} width={35} height={35} alt="" className='border rounded-full' />
+            <p>{name}</p>
+          </div>}
         </div>
         <div className="h-[320px] rounded-2xl border-[3px] relative">
           <div className="absolute top-5 right-5 flex gap-2">
             <CodeblockInnerBtn onClick={(e) => copyToClipboard(e, svgCode, setIsCopySuccess)}>
               <RiClipboardLine color="#909090" />
             </CodeblockInnerBtn>
-            <BookmarkDialog
+            {userId === nowLoggedUser && <BookmarkDialog
               handleSubmitBoxShadow={handleSubmitWave}
               isShared={isShared}
               setIsShared={setIsShared}
               title={title}
               setTitle={setTitle}
+              mainText="スタイル情報を更新"
+              saveBtnText='更新する'
             >
               <CodeblockInnerBtn>
-                <LuBookmark color="#909090" />
+                <PiPencilCircleFill color="#909090" />
               </CodeblockInnerBtn>
-            </BookmarkDialog>
+            </BookmarkDialog>}
           </div>
 
           <SyntaxHighlighter

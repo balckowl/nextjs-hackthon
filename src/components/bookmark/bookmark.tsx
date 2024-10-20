@@ -1,8 +1,9 @@
 'use client'
-import Boxshadowcard from '@/components/bookmark-card/boxshadow-card'
+import Boxshadowcard from '@/components/bookmark/boxshadow-card'
 import type { SelectBoxShadow, SelectWave } from '@/db/schema'
 import { useState } from 'react'
 import WaveCard from './wave-card'
+import NoContent from '../no-content/no-content'
 
 type Props = {
   allWaves: SelectWave[]
@@ -15,7 +16,7 @@ export default function BookMark({ allWaves, allBoxShadows }: Props) {
   return (
     <div className="w-[75%] mx-auto min-h-[calc(100vh-80px)] pb-[150px]">
       <h2 className="font-semibold text-[30px] text-center pt-[50px] pb-[60px]">
-        ブックマークをしたアイテム
+        ブックマークしたアイテム
       </h2>
       <div>
         <div className="flex items-center gap-2 mb-3">
@@ -36,10 +37,16 @@ export default function BookMark({ allWaves, allBoxShadows }: Props) {
         </div>
       </div>
       <div className="grid grid-cols-3 gap-5">
+        {allBoxShadows.length === 0 &&
+          toggleNum === 0 && <NoContent mainText='まだ何もブックマークされていません。' linkText='新規作成' href="/box-shadow/new" />
+        }
         {toggleNum === 0 &&
           allBoxShadows.map((boxShadow) => (
             <Boxshadowcard key={boxShadow.id} boxshadow={boxShadow} />
           ))}
+        {allWaves.length === 0 &&
+          toggleNum === 1 && <NoContent mainText='まだ何もブックマークされていません。' linkText='新規作成' href="/svg-waves/new" />
+        }
         {toggleNum === 1 && allWaves.map((wave) => <WaveCard key={wave.id} wave={wave} />)}
       </div>
     </div>

@@ -110,6 +110,7 @@ export const waves = pgTable('waves', {
   color: text('color').notNull(),
 })
 
+export type SelectUser = typeof users.$inferSelect
 export type SelectBoxShadow = typeof boxShadows.$inferSelect
 export type SelectWave = typeof waves.$inferSelect
 export type InsertBoxShadow = typeof boxShadows.$inferInsert
