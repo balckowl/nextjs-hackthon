@@ -33,7 +33,7 @@ export default function WaveCard({ wave: hello }: Props) {
         e.preventDefault()
         e.stopPropagation()
 
-        await fetch("http://localhost:3000/api/wave", {
+        await fetch(`${process.env.SITE_BASE_URL}/api/wave`, {
             method: "DELETE",
             headers: {
                 'Content-Type': 'application/json',
@@ -42,7 +42,7 @@ export default function WaveCard({ wave: hello }: Props) {
                 id
             })
         })
-        
+
         router.refresh()
     }
 

@@ -39,7 +39,7 @@ export default function Page() {
   const twBoxshadowCode = `shadow-[${offsetX}px_${offsetY}px_${blurRadius}px_${spreadRadius}px_${shadowColor}]`
 
   const handleSubmitBoxShadow = async () => {
-    await fetch('http://localhost:3000/api/box-shadow', {
+    await fetch(`${process.env.SITE_BASE_URL}/api/box-shadow`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',

@@ -31,7 +31,7 @@ export default function Boxshadowcard({ boxshadowWithUser, userId: nowLoggedUser
         e.preventDefault()
         e.stopPropagation()
 
-        await fetch("http://localhost:3000/api/box-shadow", {
+        await fetch(`${process.env.SITE_BASE_URL}/api/box-shadow`, {
             method: "DELETE",
             headers: {
                 'Content-Type': 'application/json',

@@ -57,7 +57,7 @@ export default function UpdateSvgWaves({ svgwaveWithUser, userId: nowLoggedUser 
 </svg>`
 
   const handleSubmitWave = async () => {
-    await fetch('http://localhost:3000/api/wave', {
+    await fetch(`${process.env.SITE_BASE_URL}/api/wave`, {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json',
