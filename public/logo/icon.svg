@@ -1,9 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<svg id="_レイヤー_2" data-name="レイヤー_2" xmlns="http://www.w3.org/2000/svg" width="241.43" height="241.43" viewBox="0 0 241.43 241.43">
+<svg id="_レイヤー_2" data-name="レイヤー 2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 241.43 241.43">
   <defs>
     <style>
       .cls-1 {
-        fill: #ff8080;
+        fill: #ffc0c0;
+      }
+
+      .cls-1, .cls-2, .cls-3, .cls-4, .cls-5, .cls-6 {
+        stroke-width: 0px;
       }
 
       .cls-2 {
@@ -11,31 +15,31 @@
       }
 
       .cls-3 {
-        fill: #f55;
-      }
-
-      .cls-4 {
-        fill: #ffa0a0;
-      }
-
-      .cls-5 {
         fill: #ffdfdf;
       }
 
+      .cls-4 {
+        fill: #ff8080;
+      }
+
+      .cls-5 {
+        fill: #ffa0a0;
+      }
+
       .cls-6 {
-        fill: #ffc0c0;
+        fill: #f55;
       }
     </style>
   </defs>
-  <g id="_レイヤー_1-2" data-name="レイヤー_1">
+  <g id="_レイヤー_1-2" data-name="レイヤー 1">
     <g>
-      <rect class="cls-3" width="241.43" height="241.43" rx="40" ry="40"/>
+      <rect class="cls-6" width="241.43" height="241.43" rx="53.65" ry="53.65"/>
       <g>
-        <circle class="cls-1" cx="163.23" cy="162.75" r="53.33"/>
-        <circle class="cls-4" cx="141.97" cy="141.73" r="53.33"/>
-        <circle class="cls-6" cx="120.72" cy="120.72" r="53.33"/>
-        <circle class="cls-5" cx="99.46" cy="99.7" r="53.33"/>
-        <circle class="cls-2" cx="78.2" cy="78.68" r="53.33"/>
+        <circle class="cls-4" cx="160.43" cy="159.99" r="49.82"/>
+        <circle class="cls-5" cx="140.58" cy="140.35" r="49.82"/>
+        <circle class="cls-1" cx="120.72" cy="120.72" r="49.82"/>
+        <circle class="cls-3" cx="100.86" cy="101.08" r="49.82"/>
+        <circle class="cls-2" cx="81" cy="81.45" r="49.82"/>
       </g>
     </g>
   </g>
