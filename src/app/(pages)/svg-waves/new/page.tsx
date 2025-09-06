@@ -13,11 +13,9 @@ import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter'
 import { oneLight } from 'react-syntax-highlighter/dist/cjs/styles/prism'
 import BookmarkDialog from '@/components/generator/bookmark-dialog'
 import { LuBookmark } from 'react-icons/lu'
-import { useRouter } from 'next/navigation'
+import { addLocalWave } from '@/lib/localStore'
 
 export default function Page() {
-
-  const router = useRouter()
 
   const [color, setColor] = useState<string>('#ff5555')
   const [opacity, setOpacity] = useState<number>(100)
@@ -25,7 +23,6 @@ export default function Page() {
   const waveList = ['smooth', 'sine', 'square']
   const [direction, setDirection] = useState<string>('bottom')
   const [isCopySuccess, setIsCopySuccess] = useState<boolean>(false)
-  const [isShared, setIsShared] = useState<boolean>(true)
   const directionList = ['top', 'bottom']
   const [isSubmittingSuccess, setIsSubmittingSuccess] = useState<boolean>(false)
   const [title, setTitle] = useState<string>("タイトル未設定")
@@ -35,27 +32,20 @@ export default function Page() {
   xmlns="http://www.w3.org/2000/svg" 
   class="transform="${direction === 'top' ? 'scale(1, -1)' : ''}">
   <title>波</title>
-  <path d="${getWavePath(type)}" stroke="none" stroke-width="0" fill="${color}" fill-opacity="${opacity / 100}" class="transition-all duration-300 ease-in-out delay-150 path-0" />
+  <path d="${getWavePath(type)}" stroke="none" strokeWidth="0" fill="${color}" fillOpacity="${opacity / 100}" class="transition-all duration-300 ease-in-out delay-150 path-0" />
 </svg>`
 
   const handleSubmitWave = async () => {
-    await fetch('http://localhost:3000/api/wave', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        isShared,
-        type,
-        direction,
-        opacity,
-        color,
-        title
-      }),
+    addLocalWave({
+      type,
+      direction,
+      opacity,
+      color,
+      title,
     })
-
     setIsSubmittingSuccess(true)
-    router.refresh()
+    // Optionally navigate to bookmark after save
+    // router.push('/bookmark')
   }
 
   return (
@@ -92,8 +82,6 @@ export default function Page() {
             </CodeblockInnerBtn>
             <BookmarkDialog
               handleSubmitBoxShadow={handleSubmitWave}
-              isShared={isShared}
-              setIsShared={setIsShared}
               title={title}
               setTitle={setTitle}
             >

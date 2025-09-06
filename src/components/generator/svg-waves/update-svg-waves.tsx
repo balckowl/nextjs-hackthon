@@ -12,17 +12,15 @@ import { RiClipboardLine } from 'react-icons/ri'
 import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter'
 import { oneLight } from 'react-syntax-highlighter/dist/cjs/styles/prism'
 import BookmarkDialog from '@/components/generator/bookmark-dialog'
-import { SelectUser, SelectWave } from '@/db/schema'
-import { useRouter } from 'next/navigation'
+import type { LocalWave } from '@/types'
+import { updateLocalWave } from '@/lib/localStore'
 import { PiPencilCircleFill } from 'react-icons/pi'
-import Image from 'next/image'
 
 type Props = {
-  svgwaveWithUser: { wave: SelectWave, user: SelectUser | null },
-  userId: string | null
+  wave: LocalWave
 }
 
-export default function UpdateSvgWaves({ svgwaveWithUser, userId: nowLoggedUser }: Props) {
+export default function UpdateSvgWaves({ wave }: Props) {
 
   const {
     id,
@@ -31,19 +29,13 @@ export default function UpdateSvgWaves({ svgwaveWithUser, userId: nowLoggedUser 
     type: oldType,
     direction: oldDirection,
     title: oldTitle,
-    userId
-  } = svgwaveWithUser["wave"]
-
-  const { name, image } = svgwaveWithUser["user"]!
-
-  const router = useRouter()
+  } = wave
   const [color, setColor] = useState<string>(oldColor)
   const [opacity, setOpacity] = useState<number>(oldOpacity)
   const [type, setType] = useState<string>(oldType)
   const waveList = ['smooth', 'sine', 'square']
   const [direction, setDirection] = useState<string>(oldDirection)
   const [isCopySuccess, setIsCopySuccess] = useState<boolean>(false)
-  const [isShared, setIsShared] = useState<boolean>(true)
   const directionList = ['top', 'bottom']
   const [isSubmittingSuccess, setIsSubmittingSuccess] = useState<boolean>(false)
   const [title, setTitle] = useState<string>(oldTitle)
@@ -53,28 +45,18 @@ export default function UpdateSvgWaves({ svgwaveWithUser, userId: nowLoggedUser 
   xmlns="http://www.w3.org/2000/svg" 
   class="transform="${direction === 'top' ? 'scale(1, -1)' : ''}">
   <title>波</title>
-  <path d="${getWavePath(type)}" stroke="none" stroke-width="0" fill="${color}" fill-opacity="${opacity / 100}" class="transition-all duration-300 ease-in-out delay-150 path-0" />
+  <path d="${getWavePath(type)}" stroke="none" strokeWidth="0" fill="${color}" fillOpacity="${opacity / 100}" class="transition-all duration-300 ease-in-out delay-150 path-0" />
 </svg>`
 
   const handleSubmitWave = async () => {
-    await fetch('http://localhost:3000/api/wave', {
-      method: 'PUT',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        id,
-        isShared,
-        type,
-        direction,
-        opacity,
-        color,
-        title
-      }),
+    updateLocalWave(id, {
+      type,
+      direction,
+      opacity,
+      color,
+      title,
     })
-
     setIsSubmittingSuccess(true)
-    router.refresh()
   }
 
   return (
@@ -103,20 +85,15 @@ export default function UpdateSvgWaves({ svgwaveWithUser, userId: nowLoggedUser 
               className="transition-all duration-300 ease-in-out delay-150 path-0"
             />
           </svg>
-          {name && image && <div className='flex items-center gap-3 absolute top-4 left-4'>
-            <Image src={image as string} width={35} height={35} alt="" className='border rounded-full' />
-            <p>{name}</p>
-          </div>}
+          {/* No user info in local mode */}
         </div>
         <div className="h-[320px] rounded-2xl border-[3px] relative">
           <div className="absolute top-5 right-5 flex gap-2">
             <CodeblockInnerBtn onClick={(e) => copyToClipboard(e, svgCode, setIsCopySuccess)}>
               <RiClipboardLine color="#909090" />
             </CodeblockInnerBtn>
-            {userId === nowLoggedUser && <BookmarkDialog
+            <BookmarkDialog
               handleSubmitBoxShadow={handleSubmitWave}
-              isShared={isShared}
-              setIsShared={setIsShared}
               title={title}
               setTitle={setTitle}
               mainText="スタイル情報を更新"
@@ -125,7 +102,7 @@ export default function UpdateSvgWaves({ svgwaveWithUser, userId: nowLoggedUser 
               <CodeblockInnerBtn>
                 <PiPencilCircleFill color="#909090" />
               </CodeblockInnerBtn>
-            </BookmarkDialog>}
+            </BookmarkDialog>
           </div>
 
           <SyntaxHighlighter

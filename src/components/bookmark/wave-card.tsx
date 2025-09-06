@@ -1,4 +1,4 @@
-import type { SelectWave } from '@/db/schema'
+import type { LocalWave } from '@/types'
 import { copyToClipboard } from '@/lib/copy-to-clipboard'
 import { getWavePath } from '@/lib/get-wave-path'
 import Link from 'next/link'
@@ -6,17 +6,16 @@ import { useState } from 'react'
 import { HiOutlineTrash } from 'react-icons/hi2'
 import { RiClipboardLine } from 'react-icons/ri'
 import AlertPopup from '../alert-popup/alert-popup'
-import { useRouter } from 'next/navigation'
+import { deleteLocalWave } from '@/lib/localStore'
+import { format } from 'date-fns'
 
 type Props = {
-    wave: SelectWave
+    wave: LocalWave
+    onDeleted?: (id: number) => void
 }
 
-export default function WaveCard({ wave: hello }: Props) {
-
-    const router = useRouter()
-
-    const { type, direction, color, opacity, id, title, isShared } = hello
+export default function WaveCard({ wave: hello, onDeleted }: Props) {
+    const { type, direction, color, opacity, id, title, createdAt } = hello
     const [isCopySuccess, setIsCopySuccess] = useState<boolean>(false)
 
     const svgCode = `<svg 
@@ -24,26 +23,17 @@ export default function WaveCard({ wave: hello }: Props) {
   xmlns="http://www.w3.org/2000/svg" 
   class="transform="${direction === 'top' ? 'scale(1, -1)' : ''}">
   <title>波</title>
-  <path d="${getWavePath(type)}" stroke="none" stroke-width="0" fill="${color}" fill-opacity="${opacity / 100}" class="transition-all duration-300 ease-in-out delay-150 path-0" />
+  <path d="${getWavePath(type)}" stroke="none" strokeWidth="0" fill="${color}" fillOpacity="${opacity / 100}" class="transition-all duration-300 ease-in-out delay-150 path-0" />
 </svg>`
 
     // React.MouseEventを使用して型を指定
-    const handleDeleteWave = async (e: React.MouseEvent<HTMLDivElement>) => {
+    const handleDeleteWave = async (e: React.SyntheticEvent) => {
 
         e.preventDefault()
         e.stopPropagation()
 
-        await fetch("http://localhost:3000/api/wave", {
-            method: "DELETE",
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({
-                id
-            })
-        })
-        
-        router.refresh()
+        deleteLocalWave(id)
+        onDeleted?.(id)
     }
 
     return (
@@ -67,21 +57,36 @@ export default function WaveCard({ wave: hello }: Props) {
                     />
                 </svg>
                 <div className='absolute top-3 right-3 flex gap-2'>
-                    <div onClick={(e) => copyToClipboard(e, svgCode, setIsCopySuccess)} className='bg-white border-[2px] p-2 rounded-md'>
+                    <button
+                        type="button"
+                        tabIndex={0}
+                        aria-label="コードをコピー"
+                        onClick={(e) => copyToClipboard(e, svgCode, setIsCopySuccess)}
+                        onKeyDown={(e) => {
+                            if (e.key === 'Enter') copyToClipboard(e, svgCode, setIsCopySuccess)
+                        }}
+                        className='bg-white border-[2px] p-2 rounded-md'
+                    >
                         <RiClipboardLine />
-                    </div>
-                    <div onClick={handleDeleteWave} className='bg-white border-[2px] p-2 rounded-md'>
+                    </button>
+                    <button
+                        type="button"
+                        tabIndex={0}
+                        aria-label="削除"
+                        onClick={handleDeleteWave}
+                        onKeyDown={(e) => {
+                            if (e.key === 'Enter') handleDeleteWave(e)
+                        }}
+                        className='bg-white border-[2px] p-2 rounded-md'
+                    >
                         <HiOutlineTrash />
-                    </div>
+                    </button>
                 </div>
             </div>
             <div className="flex items-center justify-between">
                 <h2 className="text-xl font-bold">{title}</h2>
-                <div className="bg-secondary text-primary text-[13px] px-4 py-1 rounded-full font-bold">
-                    {isShared ? "公開" : "非公開"}
-                </div>
             </div>
-            <small className="text-[#BEBEBE]">2024/12/31</small>
+            <small className="text-[#BEBEBE]">{format(new Date(createdAt), 'yyyy/MM/dd')}</small>
         </Link>
     )
 }
