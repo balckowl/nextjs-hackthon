@@ -1,7 +1,7 @@
-import type { Dispatch, MouseEvent, SetStateAction } from 'react'
+import type { Dispatch, SetStateAction, SyntheticEvent } from 'react'
 
 export const copyToClipboard = (
-  e: MouseEvent,
+  e: SyntheticEvent,
   code: string,
   setValue: Dispatch<SetStateAction<boolean>>,
 ) => {

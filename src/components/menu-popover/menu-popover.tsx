@@ -1,7 +1,5 @@
-import { signOut } from '@/auth'
 import * as Popover from '@radix-ui/react-popover'
 import type { ReactNode } from 'react'
-import { MdLogout } from 'react-icons/md'
 
 type Props = {
   children: ReactNode;
