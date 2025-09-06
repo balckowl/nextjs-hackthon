@@ -7,9 +7,9 @@ import CodeblockInnerBtn from '@/components/generator/codeblock-inner-btn'
 import { ColorControl } from '@/components/generator/color-control'
 import PropertyArea from '@/components/generator/property-area'
 import { SliderControl } from '@/components/generator/slide-control'
-import { SelectBoxShadow, SelectUser } from '@/db/schema'
+import type { LocalBoxShadow } from '@/types'
 import { copyToClipboard } from '@/lib/copy-to-clipboard'
-import { useRouter } from 'next/navigation'
+import { updateLocalBoxShadow } from '@/lib/localStore'
 import { useState } from 'react'
 import { HiArrowPath } from 'react-icons/hi2'
 import { PiPencilCircleFill } from 'react-icons/pi'
@@ -18,15 +18,13 @@ import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter'
 import { oneLight } from 'react-syntax-highlighter/dist/esm/styles/prism'
 
 type Props = {
-    boxshadowWithUser: { boxShadow: SelectBoxShadow, user: SelectUser | null },
-    userId: string | null,
+  boxShadow: LocalBoxShadow
 }
 
-export default function UpdateBoxShadow({ boxshadowWithUser, userId: nowLoggedUserId }: Props) {
+export default function UpdateBoxShadow({ boxShadow: data }: Props) {
 
     const {
         id,
-        userId,
         color: oldColor,
         offsetX: oldOffsetX,
         offsetY: oldOffsetY,
@@ -34,13 +32,7 @@ export default function UpdateBoxShadow({ boxshadowWithUser, userId: nowLoggedUs
         spreadRadius: oldSpreadRadis,
         shadowColor: oldShadowColor,
         title: oldTitle
-    } = boxshadowWithUser["boxShadow"]
-
-    const {
-        image, name
-    } = boxshadowWithUser["user"]!
-
-    const router = useRouter()
+    } = data
 
     const [color, setColor] = useState<string>(oldColor)
     const [offsetX, setOffsetX] = useState<number>(oldOffsetX)
@@ -50,7 +42,6 @@ export default function UpdateBoxShadow({ boxshadowWithUser, userId: nowLoggedUs
     const [shadowColor, setShadowColor] = useState<string>(oldShadowColor)
     const [isCopySuccess, setIsCopySuccess] = useState<boolean>(false)
     const [isVanillaCss, setIsVanillaCss] = useState<boolean>(true)
-    const [isShared, setIsShared] = useState<boolean>(true)
     const [isSubmittingSuccess, setIsSubmittingSuccess] = useState<boolean>(false)
     const [title, setTitle] = useState<string>(oldTitle)
 
@@ -63,26 +54,16 @@ export default function UpdateBoxShadow({ boxshadowWithUser, userId: nowLoggedUs
     const twBoxshadowCode = `shadow-[${offsetX}px_${offsetY}px_${blurRadius}px_${spreadRadius}px_${shadowColor}]`
 
     const handleSubmitBoxShadow = async () => {
-        await fetch('http://localhost:3000/api/box-shadow', {
-            method: 'PUT',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({
-                id,
-                isShared,
-                offsetX,
-                offsetY,
-                blurRadius,
-                spreadRadius,
-                color,
-                shadowColor,
-                title,
-            }),
+        updateLocalBoxShadow(id, {
+            offsetX,
+            offsetY,
+            blurRadius,
+            spreadRadius,
+            color,
+            shadowColor,
+            title,
         })
-
         setIsSubmittingSuccess(true)
-        router.refresh()
     }
 
     return (
@@ -94,7 +75,7 @@ export default function UpdateBoxShadow({ boxshadowWithUser, userId: nowLoggedUs
                 text="登録しました"
             />
             <div className="grid grid-cols-2 gap-5 pt-[35px] mb-[35px]">
-                <Preview boxShadow={boxShadow} color={color} name={name as string} image={image as string}/>
+                <Preview boxShadow={boxShadow} color={color} />
                 <div className="h-[320px] rounded-2xl border-[3px] relative">
                     <div className="absolute top-5 right-5 flex gap-2">
                         <CodeblockInnerBtn
@@ -104,10 +85,8 @@ export default function UpdateBoxShadow({ boxshadowWithUser, userId: nowLoggedUs
                         >
                             <RiClipboardLine color="#909090" />
                         </CodeblockInnerBtn>
-                        {userId === nowLoggedUserId && <BookmarkDialog
+                        <BookmarkDialog
                             handleSubmitBoxShadow={handleSubmitBoxShadow}
-                            isShared={isShared}
-                            setIsShared={setIsShared}
                             title={title}
                             setTitle={setTitle}
                             mainText="スタイル情報を更新"
@@ -116,7 +95,7 @@ export default function UpdateBoxShadow({ boxshadowWithUser, userId: nowLoggedUs
                             <CodeblockInnerBtn>
                                 <PiPencilCircleFill color="#909090" />
                             </CodeblockInnerBtn>
-                        </BookmarkDialog>}
+                        </BookmarkDialog>
                     </div>
 
                     <CodeblockInnerBtn

@@ -4,15 +4,13 @@ import { RxCross2 } from 'react-icons/rx'
 
 type Props = {
   handleSubmitBoxShadow: () => void,
-  isShared: boolean,
-  setIsShared: Dispatch<SetStateAction<boolean>>,
   children: ReactNode,
   title: string
   setTitle: Dispatch<SetStateAction<string>>
   mainText?: string
   saveBtnText?: string
 }
-export default function ProfileDialog({ mainText = "ブックマークに登録", saveBtnText = "登録する", handleSubmitBoxShadow, isShared, setIsShared, children, title, setTitle }: Props) {
+export default function ProfileDialog({ mainText = "ブックマークに登録", saveBtnText = "登録する", handleSubmitBoxShadow, children, title, setTitle }: Props) {
 
   return (
     <Dialog.Root>
@@ -25,27 +23,6 @@ export default function ProfileDialog({ mainText = "ブックマークに登録"
           <Dialog.Title className="text-lg font-semibold text-gray-900 mb-2">
             {mainText}
           </Dialog.Title>
-
-          <div className="grid grid-cols-2 mb-[15px] bg-[#ededed] rounded-md">
-            <div className="flex justify-center">
-              <button
-                type="button"
-                onClick={() => setIsShared(true)}
-                className={`${isShared ? 'bg-primary  text-white' : 'bg-[#ededed] text-[#909090]'} flex-1 font-bold text-[13px] py-[6px] rounded-md`}
-              >
-                公開
-              </button>
-            </div>
-            <div className="flex justify-center">
-              <button
-                type="button"
-                onClick={() => setIsShared(false)}
-                className={`${!isShared ? 'bg-primary  text-white' : 'bg-[#ededed] text-[#909090]'} flex-1 font-bold text-[13px] py-[6px] rounded-md`}
-              >
-                非公開
-              </button>
-            </div>
-          </div>
 
           <form className="mb-[15px]">
             <label className="block">
@@ -60,12 +37,11 @@ export default function ProfileDialog({ mainText = "ブックマークに登録"
           </form>
 
           <div className="bg-secondary text-primary font-bold py-3 px-4 rounded-md mb-[15px]">
-            <h3 className="text-[12px] mb-[8px]">公開される情報</h3>
+            <h3 className="text-[12px] mb-[8px]">留意事項</h3>
             <ul className="text-[10px] space-y-[4px] list-disc list-inside">
-              <li>アカウントのアイコン</li>
-              <li>作品のタイトル</li>
-              <li>アカウントの表示名</li>
-              <li>作品のプリセット</li>
+              <li>このデータはブラウザのストレージに保存されます</li>
+              <li>キャッシュを削除すると保存データは失われます</li>
+              <li>ブックマークは運営含む他のユーザーと共有されることはありません</li>
             </ul>
           </div>
 
