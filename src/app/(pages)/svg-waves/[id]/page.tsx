@@ -1,19 +1,19 @@
-import { getWaveWithUser } from "@/app/data/wave"
-import { auth } from "@/auth"
-import UpdateSvgWaves from "@/components/generator/svg-waves/update-svg-waves"
+'use client'
+import UpdateSvgWaves from '@/components/generator/svg-waves/update-svg-waves'
+import { getLocalWaveById } from '@/lib/localStore'
+import type { LocalWave } from '@/types'
+import { useEffect, useState } from 'react'
 
-export default async function Page({ params }: { params: { id: string } }) {
-    const { id } = params
-    const svgwaveWithUser = await getWaveWithUser(Number(id))
+export default function Page({ params }: { params: { id: string } }) {
+  const [data, setData] = useState<LocalWave | null>(null)
 
-    if (!svgwaveWithUser) {
-        return <div>SVG Waves data not found.</div>
-    }
+  useEffect(() => {
+    const parsed = Number(params.id)
+    const found = getLocalWaveById(parsed)
+    setData(found ?? null)
+  }, [params.id])
 
-    const session = await auth()
-    const userId = session?.user?.id || null;
+  if (!data) return <div>SVG Waves data not found.</div>
 
-    return (
-        <UpdateSvgWaves svgwaveWithUser={svgwaveWithUser} userId={userId}/>
-    )
+  return <UpdateSvgWaves wave={data} />
 }
