@@ -1,22 +1,19 @@
-import { getBoxshadowWithUser } from "@/app/data/box-shadow"
-import { auth } from "@/auth"
-import UpdateBoxShadow from "@/components/generator/box-shadow/update-box-shadow"
+'use client'
+import UpdateBoxShadow from '@/components/generator/box-shadow/update-box-shadow'
+import { getLocalBoxShadowById } from '@/lib/localStore'
+import type { LocalBoxShadow } from '@/types'
+import { useEffect, useState } from 'react'
 
-export default async function Page({ params }: { params: { id: string } }) {
-    
-    const { id } = params
-    const boxshadowWithUser = await getBoxshadowWithUser(Number(id))
+export default function Page({ params }: { params: { id: string } }) {
+  const [data, setData] = useState<LocalBoxShadow | null>(null)
 
-    console.log(boxshadowWithUser)
+  useEffect(() => {
+    const parsed = Number(params.id)
+    const found = getLocalBoxShadowById(parsed)
+    setData(found ?? null)
+  }, [params.id])
 
-    if (!boxshadowWithUser) {
-        return <div>Box shadow data not found.</div>
-    }
+  if (!data) return <div>Box shadow data not found.</div>
 
-    const session = await auth()
-    const userId = session?.user?.id || null;
-
-    return (
-       <UpdateBoxShadow boxshadowWithUser={boxshadowWithUser} userId={userId}/>
-    )
+  return <UpdateBoxShadow boxShadow={data} />
 }

@@ -8,7 +8,7 @@ import { ColorControl } from '@/components/generator/color-control'
 import PropertyArea from '@/components/generator/property-area'
 import { SliderControl } from '@/components/generator/slide-control'
 import { copyToClipboard } from '@/lib/copy-to-clipboard'
-import { useRouter } from 'next/navigation'
+import { addLocalBoxShadow } from '@/lib/localStore'
 import { useState } from 'react'
 import { HiArrowPath } from 'react-icons/hi2'
 import { LuBookmark } from 'react-icons/lu'
@@ -17,7 +17,6 @@ import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter'
 import { oneLight } from 'react-syntax-highlighter/dist/esm/styles/prism'
 
 export default function Page() {
-  const router = useRouter()
   const [color, setColor] = useState<string>('#ff5555')
   const [offsetX, setOffsetX] = useState<number>(0)
   const [offsetY, setOffsetY] = useState<number>(0)
@@ -26,7 +25,6 @@ export default function Page() {
   const [shadowColor, setShadowColor] = useState<string>('#777777')
   const [isCopySuccess, setIsCopySuccess] = useState<boolean>(false)
   const [isVanillaCss, setIsVanillaCss] = useState<boolean>(true)
-  const [isShared, setIsShared] = useState<boolean>(true)
   const [isSubmittingSuccess, setIsSubmittingSuccess] = useState<boolean>(false)
   const [title, setTitle] = useState<string>("タイトル未設定")
 
@@ -39,25 +37,17 @@ export default function Page() {
   const twBoxshadowCode = `shadow-[${offsetX}px_${offsetY}px_${blurRadius}px_${spreadRadius}px_${shadowColor}]`
 
   const handleSubmitBoxShadow = async () => {
-    await fetch('http://localhost:3000/api/box-shadow', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        isShared,
-        offsetX,
-        offsetY,
-        blurRadius,
-        spreadRadius,
-        color,
-        shadowColor,
-        title,
-      }),
+    addLocalBoxShadow({
+      offsetX,
+      offsetY,
+      blurRadius,
+      spreadRadius,
+      color,
+      shadowColor,
+      title,
     })
-
     setIsSubmittingSuccess(true)
-    router.refresh()
+    // router.push('/bookmark')
   }
 
   return (
@@ -81,8 +71,6 @@ export default function Page() {
             </CodeblockInnerBtn>
             <BookmarkDialog
               handleSubmitBoxShadow={handleSubmitBoxShadow}
-              isShared={isShared}
-              setIsShared={setIsShared}
               title={title}
               setTitle={setTitle}
             >
